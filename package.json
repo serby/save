@@ -1,0 +1,31 @@
+{ "author": "Paul Serby <paul@serby.net>"
+, "name": "entity-store"
+, "description": "A simple persistence abstraction for validating and storing model entities"
+, "version": "0.0.1"
+, "tags":
+  [ "data"
+  , "database"
+  , "ORM"
+  , "it's not an ORM"
+  ]
+, "repository":
+  { "type": "git"
+  , "url": "git@github.com:serby/entity-store"
+  }
+, "main": ""
+, "scripts":
+  { "test": "mocha -r should"
+  }
+, "engines":
+  { "node": ">=0.6.0 <0.7.0"
+  }
+, "dependencies":
+  {
+    "lodash": "~0.3"
+  }
+, "devDependencies":
+  { "mocha": "*"
+  , "should": "*"
+  , "async": "~0.1.22"
+  }
+}
