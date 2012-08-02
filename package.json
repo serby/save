@@ -20,12 +20,14 @@
   { "node": ">=0.6.0 <0.7.0"
   }
 , "dependencies":
-  {
-    "lodash": "~0.3"
+  { "lodash": "~0.3"
+  , "piton-pipe": "~0.0"
   }
 , "devDependencies":
   { "mocha": "*"
   , "should": "*"
   , "async": "~0.1.22"
+  , "schemata": "~0.0"
+  , "piton-validity": "~0.1"
   }
 }

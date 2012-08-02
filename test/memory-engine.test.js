@@ -13,7 +13,7 @@ function insertObjects(objects, callback) {
   }
   var engine = getEngine();
   async.map(objects, engine.insert, function(error, results) {
-      callback(error, engine, results);
+    callback(error, engine, results);
   });
 }
 
@@ -193,7 +193,7 @@ describe('memory-engine', function() {
     it('should return undefined when no data matches query ', function(done) {
       getEngine().findOne({ a: 1 }, {}, function(error, object) {
 
-        true.should.equal(object === undefined);
+        (object === undefined).should.equal(true);
         done();
       });
     });
