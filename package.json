@@ -12,7 +12,7 @@
   { "type": "git"
   , "url": "git@github.com:serby/entity-store"
   }
-, "main": ""
+, "main": "lib/entity-store"
 , "scripts":
   { "test": "mocha -r should"
   }
