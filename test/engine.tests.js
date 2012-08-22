@@ -180,6 +180,30 @@ module.exports = function(idProperty, getEngine) {
           });
         });
       });
+
+      it('should error if there is no id property', function(done) {
+        getEngine(function(error, engine) {
+          engine.deleteOne({ a: 1 }, function(error) {
+            error.message.should.eql('Object has no \'' + idProperty + '\' property');
+            done();
+          });
+        });
+      });
+
+      it('should error if there are no objects in the store with given id', function(done) {
+        getEngine(function(error, engine) {
+          var entity = { a: 1 };
+
+          // Assigning an id that doesnt exist
+          entity[idProperty] = 1;
+
+          engine.deleteOne(entity, function(error) {
+            error.message.should.equal('No object found with \'' + idProperty + '\' = \'1\'');
+            done();
+          });
+        });
+      });
+
     });
 
     describe('#find()', function() {
