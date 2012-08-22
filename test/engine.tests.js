@@ -88,6 +88,31 @@ module.exports = function(idProperty, getEngine) {
 
     describe('#read()', function() {
 
+      it('should return undefined if no object is found with given id', function(done) {
+
+        getEngine(function(error, engine) {
+          engine.read('999', function(error, entity) {
+            true.should.eql(entity === undefined);
+            done();
+          });
+        });
+      });
+
+      it('should return object if id is found', function(done) {
+
+        var original = { a: 1 };
+
+        getEngine(function(error, engine) {
+          engine.create(original, function(error, entity) {
+
+            engine.read(1, function(error, entity) {
+              entity.should.eql({_id:1, a:1 });
+             done();
+            });
+          });
+        });
+      });
+
     });
 
     describe('#update()', function() {
