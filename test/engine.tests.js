@@ -219,13 +219,26 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
-      it('should return array of objects in the order given', function(done) {
+      it('should return array of objects in ascending order', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, [{ a:3 }, { a:1 }, { a:2 }], function(error) {
             engine.find({}, { $sort: { a: 1} }, function(error, objects) {
               objects[0].a.should.equal(1);
               objects[1].a.should.equal(2);
               objects[2].a.should.equal(3);
+              done();
+            });
+          });
+        });
+      });
+
+      it('should return array of objects in descending order', function(done) {
+        getEngine(function(error, engine) {
+          insertObjects(engine, [{ a:3 }, { a:1 }, { a:2 }], function(error) {
+            engine.find({}, { $sort: { a: -1 } }, function(error, objects) {
+              objects[0].a.should.equal(3);
+              objects[1].a.should.equal(2);
+              objects[2].a.should.equal(1);
               done();
             });
           });
