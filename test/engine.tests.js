@@ -69,7 +69,7 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
-      it('should override any id that is on the original object', function(done) {
+      it('should override given id that is on the original object', function(done) {
 
         var original = {  a: 1 };
         original[idProperty] = 0;
@@ -82,6 +82,11 @@ module.exports = function(idProperty, getEngine) {
           });
         });
       });
+
+    });
+
+
+    describe('#read()', function() {
 
     });
 
@@ -133,6 +138,10 @@ module.exports = function(idProperty, getEngine) {
           done();
         });
       });
+
+    });
+
+    describe('#delete()', function() {
 
     });
 
