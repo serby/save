@@ -166,6 +166,20 @@ module.exports = function(idProperty, getEngine) {
 
     describe('#deleteOne()', function() {
 
+      it('should delete the entity', function(done) {
+        getEngine(function(error, engine) {
+          engine.create({ a: 1 }, function(error, insertedObject) {
+            engine.deleteOne(insertedObject, function(error) {
+              (error === undefined).should.equal(true);
+              engine.find(insertedObject, {}, function(error, objects) {
+
+                objects.should.be.empty;
+                done();
+              });
+            });
+          });
+        });
+      });
     });
 
     describe('#find()', function() {
