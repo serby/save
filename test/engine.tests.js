@@ -6,9 +6,7 @@ function insertObjects(engine, objects, callback) {
   if (!Array.isArray(objects)) {
     objects = [objects];
   }
-  async.map(objects, engine.create, function(error, results) {
-    callback(error, results);
-  });
+  async.map(objects, engine.create, callback);
 }
 
 module.exports = function(idProperty, getEngine) {
