@@ -166,7 +166,7 @@ module.exports = function(idProperty, getEngine) {
 
     });
 
-    describe('#delete()', function() {
+    describe('#deleteOne()', function() {
 
     });
 
