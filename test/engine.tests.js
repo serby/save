@@ -6,7 +6,7 @@ function insertObjects(engine, objects, callback) {
   if (!Array.isArray(objects)) {
     objects = [objects];
   }
-  async.map(objects, engine.insert, function(error, results) {
+  async.map(objects, engine.create, function(error, results) {
     callback(error, results);
   });
 }
@@ -15,11 +15,11 @@ module.exports = function(idProperty, getEngine) {
 
   describe('memory-engine', function() {
 
-    describe('#insert()', function() {
+    describe('#create()', function() {
 
       it('should return the inserted entity with a new id', function(done) {
         getEngine(function(error, engine) {
-          engine.insert({ a:1 }, function(error, entity) {
+          engine.create({ a:1 }, function(error, entity) {
             entity.should.have.property(idProperty);
             done();
           });
@@ -47,7 +47,7 @@ module.exports = function(idProperty, getEngine) {
         }
         getEngine(function(error, engine) {
           for (var i = 0; i < n; i += 1) {
-            engine.insert({ a:1 }, cb);
+            engine.create({ a:1 }, cb);
           }
         });
 
@@ -58,7 +58,7 @@ module.exports = function(idProperty, getEngine) {
         var original = { a:1 };
 
         getEngine(function(error, engine) {
-          engine.insert(original, function(error, entity) {
+          engine.create(original, function(error, entity) {
 
             delete entity[idProperty];
 
@@ -75,7 +75,7 @@ module.exports = function(idProperty, getEngine) {
         original[idProperty] = 0;
 
         getEngine(function(error, engine) {
-          engine.insert(original, function(error, entity) {
+          engine.create(original, function(error, entity) {
 
             entity._id.should.not.equal(0);
             done();
@@ -85,13 +85,13 @@ module.exports = function(idProperty, getEngine) {
 
     });
 
-    describe('#save()', function() {
+    describe('#update()', function() {
 
       it('should return the full entity', function(done) {
 
         getEngine(function(error, engine) {
-          engine.insert({ a: 1 }, function(error, insertedObject) {
-            engine.save(insertedObject, function(error, savedObject) {
+          engine.create({ a: 1 }, function(error, insertedObject) {
+            engine.update(insertedObject, function(error, savedObject) {
               savedObject.should.eql(insertedObject);
               done();
             });
@@ -101,7 +101,7 @@ module.exports = function(idProperty, getEngine) {
 
       it('should error if there is no id property', function(done) {
         getEngine(function(error, engine) {
-          engine.save({ a: 1 }, function(error, savedObject) {
+          engine.update({ a: 1 }, function(error, savedObject) {
             error.message.should.eql('Object has no \'' + idProperty + '\' property');
             done();
           });
@@ -112,7 +112,7 @@ module.exports = function(idProperty, getEngine) {
         getEngine(function(error, engine) {
           var object = { a: 1 };
           object[idProperty] = 1;
-          engine.save(object, function(error, savedObject) {
+          engine.update(object, function(error, savedObject) {
             error.message.should.eql('No object found with \'' + idProperty + '\' = \'1\'');
             done();
           });
@@ -124,7 +124,7 @@ module.exports = function(idProperty, getEngine) {
           insertObjects(engine, { a: 1 }, function(error, objects) {
             var extraSet = { b: 2};
             extraSet[idProperty] = objects[0][idProperty];
-            engine.save(extraSet, function(error, savedObject) {
+            engine.update(extraSet, function(error, savedObject) {
               var compositeObject = _.extend({}, objects[0], extraSet);
               savedObject.should.eql(compositeObject);
             });
