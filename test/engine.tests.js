@@ -161,7 +161,7 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
-      it('should overwrite original properties', function(done) {
+      it('should not overwrite original properties', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, { a: 1 }, function(error, objects) {
             var extraSet = { b: 2};
@@ -169,10 +169,23 @@ module.exports = function(idProperty, getEngine) {
             engine.update(extraSet, function(error, savedObject) {
               var compositeObject = _.extend({}, objects[0], extraSet);
               savedObject.should.eql(compositeObject);
+              done();
+            });
+          });
+        });
+      });
+
+      it('should overwrite original properties when option is passed', function(done) {
+        getEngine(function(error, engine) {
+          insertObjects(engine, { a: 1 }, function(error, objects) {
+            var newObject = { b: 2 };
+            newObject[idProperty] = objects[0][idProperty];
+            engine.update(newObject, true, function(error, savedObject) {
+              savedObject.should.eql(newObject);
+              done();
             });
 
           });
-          done();
         });
       });
 
