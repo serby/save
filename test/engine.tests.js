@@ -24,6 +24,16 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
+      it('should emit a \'create\' event', function(done) {
+        getEngine(function(error, engine) {
+          engine.on('create', function(entity) {
+            entity.should.eql({ a:1 });
+            done();
+          });
+          engine.create({ a:1 });
+        });
+      });
+
       it('should always create a unique id', function(done) {
 
         var n = 100
@@ -110,6 +120,17 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
+      it('should emit a \'read\' event', function(done) {
+        getEngine(function(error, engine) {
+          engine.on('read', function(id) {
+            id.should.eql('999');
+            done();
+          });
+          engine.read('999', function(error, entity) {
+          });
+        });
+      });
+
       it('should return object if id is found', function(done) {
 
         var original = { a: 1 };
@@ -137,6 +158,18 @@ module.exports = function(idProperty, getEngine) {
               savedObject.should.eql(insertedObject);
               done();
             });
+          });
+        });
+      });
+
+      it('should emit a \'update\' event', function(done) {
+        getEngine(function(error, engine) {
+          engine.on('update', function(entity) {
+            entity.should.eql({ a: 1, _id: 1 });
+            done();
+          });
+          engine.create({ a: 1 }, function(error, insertedObject) {
+            engine.update(insertedObject);
           });
         });
       });
@@ -208,6 +241,18 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
+      it('should emit a \'deleteOne\' event', function(done) {
+        getEngine(function(error, engine) {
+          engine.on('deleteOne', function(entity) {
+            entity.should.eql({ a: 1, _id: 1 });
+            done();
+          });
+          engine.create({ a: 1 }, function(error, insertedObject) {
+            engine.deleteOne(insertedObject);
+          });
+        });
+      });
+
       it('should error if there is no id property', function(done) {
         getEngine(function(error, engine) {
           engine.deleteOne({ a: 1 }, function(error) {
@@ -258,6 +303,19 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
+
+      it('should emit a \'delete\' event', function(done) {
+        getEngine(function(error, engine) {
+          engine.on('delete', function(entity) {
+            entity.should.eql({ a: 1, _id: 1 });
+            done();
+          });
+          engine.create({ a: 1 }, function(error, insertedObject) {
+            engine.delete(insertedObject);
+          });
+        });
+      });
+
       it('should error if there are no objects to delete', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }], function(error) {
@@ -282,6 +340,19 @@ module.exports = function(idProperty, getEngine) {
           });
         });
 
+      });
+
+      it('should emit a \'find\' event', function(done) {
+        getEngine(function(error, engine) {
+          engine.on('find', function(entity) {
+            entity.should.eql({ a: 1 });
+            done();
+          });
+
+          engine.find({ a: 1 }, {}, function(error, objects) {
+          });
+
+        });
       });
 
       it('should return array of objects for a single clause query that matches existing objects ', function(done) {
@@ -366,6 +437,19 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
+      it('should emit a \'findOne\' event', function(done) {
+        getEngine(function(error, engine) {
+          engine.on('findOne', function(entity) {
+            entity.should.eql({ a: 1 });
+            done();
+          });
+
+          engine.findOne({ a: 1 }, {}, function(error, objects) {
+          });
+
+        });
+      });
+
       it('should return an object for a single clause query that matches an existing object ', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, { a:1 }, function(error) {
@@ -398,6 +482,19 @@ module.exports = function(idProperty, getEngine) {
             count.should.equal(0);
             done();
           });
+        });
+      });
+
+      it('should emit a \'count\' event', function(done) {
+        getEngine(function(error, engine) {
+          engine.on('count', function(entity) {
+            entity.should.eql({ a: 1 });
+            done();
+          });
+
+          engine.count({ a: 1 }, function(error, objects) {
+          });
+
         });
       });
 
