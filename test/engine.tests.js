@@ -81,6 +81,20 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
+      it('should create a copy of the object before saving', function(done) {
+
+        var item = { a: 1 };
+
+        getEngine(function(error, engine) {
+          insertObjects(engine, [item, item], function(error) {
+            engine.find({}, {}, function(error, objects) {
+              objects[0][idProperty].should.not.equal(objects[1][idProperty]);
+              done();
+            });
+          });
+        });
+      });
+
     });
 
 
@@ -147,7 +161,7 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
-      it('should overwrite original properties', function(done) {
+      it('should not overwrite original properties', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, { a: 1 }, function(error, objects) {
             var extraSet = { b: 2};
@@ -155,10 +169,23 @@ module.exports = function(idProperty, getEngine) {
             engine.update(extraSet, function(error, savedObject) {
               var compositeObject = _.extend({}, objects[0], extraSet);
               savedObject.should.eql(compositeObject);
+              done();
+            });
+          });
+        });
+      });
+
+      it('should overwrite original properties when option is passed', function(done) {
+        getEngine(function(error, engine) {
+          insertObjects(engine, { a: 1 }, function(error, objects) {
+            var newObject = { b: 2 };
+            newObject[idProperty] = objects[0][idProperty];
+            engine.update(newObject, true, function(error, savedObject) {
+              savedObject.should.eql(newObject);
+              done();
             });
 
           });
-          done();
         });
       });
 
@@ -200,6 +227,44 @@ module.exports = function(idProperty, getEngine) {
           engine.deleteOne(entity, function(error) {
             error.message.should.equal('No object found with \'' + idProperty + '\' = \'1\'');
             done();
+          });
+        });
+      });
+
+    });
+
+    describe('#delete()', function() {
+
+      it('should delete the entity if the delete query matches', function(done) {
+        getEngine(function(error, engine) {
+          var objectToDelete = { a: 1 };
+          insertObjects(engine, [objectToDelete, objectToDelete, { a:2 }, { b:1 }], function(error) {
+            engine.delete(objectToDelete, function(error) {
+              (error === null).should.eql(true);
+
+              engine.find({}, {}, function(error, objects) {
+
+                // Assert items have been deleted
+                objects.length.should.equal(2);
+
+                // Assert items returned arent deleted ones
+                objects.forEach(function(object) {
+                  object.should.not.equal(objectToDelete);
+                });
+                done();
+              });
+            });
+          });
+        });
+      });
+
+      it('should error if there are no objects to delete', function(done) {
+        getEngine(function(error, engine) {
+          insertObjects(engine, [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }], function(error) {
+            engine.delete({ a: 5 }, function(error) {
+              error.message.should.eql('No items to delete with that query');
+              done();
+            });
           });
         });
       });
