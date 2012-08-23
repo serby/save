@@ -81,6 +81,20 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
+      it('should create a copy of the object before saving', function(done) {
+
+        var item = { a: 1 };
+
+        getEngine(function(error, engine) {
+          insertObjects(engine, [item, item], function(error) {
+            engine.find({}, {}, function(error, objects) {
+              objects[0][idProperty].should.not.equal(objects[1][idProperty]);
+              done();
+            });
+          });
+        });
+      });
+
     });
 
 
