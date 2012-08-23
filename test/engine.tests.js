@@ -220,6 +220,33 @@ module.exports = function(idProperty, getEngine) {
 
     });
 
+    describe('#delete()', function() {
+
+      it('should delete the entity if the delete query matches', function(done) {
+        getEngine(function(error, engine) {
+          var objectToDelete = { a: 1 };
+          insertObjects(engine, [objectToDelete, objectToDelete, { a:2 }, { b:1 }], function(error) {
+            engine.delete(objectToDelete, function(error) {
+              (error === null).should.eql(true);
+
+              engine.find({}, {}, function(error, objects) {
+
+                // Assert items have been deleted
+                objects.length.should.equal(2);
+
+                // Assert items returned arent deleted ones
+                objects.forEach(function(object) {
+                  object.should.not.equal(objectToDelete);
+                });
+                done();
+              });
+            });
+          });
+        });
+      });
+
+    });
+
     describe('#find()', function() {
 
       it('should return empty array when no data matches query ', function(done) {
