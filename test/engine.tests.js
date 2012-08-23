@@ -245,6 +245,17 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
+      it('should error if there are no objects to delete', function(done) {
+        getEngine(function(error, engine) {
+          insertObjects(engine, [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }], function(error) {
+            engine.delete({ a: 5 }, function(error) {
+              error.message.should.eql('No items to delete with that query');
+              done();
+            });
+          });
+        });
+      });
+
     });
 
     describe('#find()', function() {
