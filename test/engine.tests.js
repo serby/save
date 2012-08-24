@@ -9,9 +9,23 @@ function insertObjects(engine, objects, callback) {
   async.map(objects, engine.create, callback);
 }
 
-module.exports = function(idProperty, getEngine) {
+module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) {
 
   describe('memory-engine', function() {
+
+    before(function(done) {
+      if (typeof beforeCallback === 'function') {
+        beforeCallback(done);
+      } else {
+        done();
+      }
+    });
+
+    after(function() {
+      if (typeof afterCallback === 'function') {
+        afterCallback();
+      }
+    });
 
     describe('#create()', function() {
 
@@ -77,15 +91,15 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
-      it('should override given id that is on the original object', function(done) {
+      it('should allow idProperty to be defined', function(done) {
 
         var original = {  a: 1 };
         original[idProperty] = 0;
 
         getEngine(function(error, engine) {
           engine.create(original, function(error, entity) {
-
-            entity._id.should.not.equal(0);
+            console.log(entity);
+            entity._id.should.equal(0);
             done();
           });
         });
@@ -417,10 +431,7 @@ module.exports = function(idProperty, getEngine) {
         });
       });
 
-      it('should return array of objects in the order given by multiple properties', function(done) {
-        //INCOMPLETE
-        done();
-      });
+      it('should return array of objects in the order given by multiple properties');
 
     });
 
