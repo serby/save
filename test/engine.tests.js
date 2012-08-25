@@ -1,5 +1,6 @@
 var _ = require('lodash')
   , async = require('async')
+  , should = require('should')
   ;
 
 function insertObjects(engine, objects, callback) {
@@ -50,13 +51,13 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
       it('should always create a unique id', function(done) {
 
-        var n = 100
+        var n = 15
           , c = 1
           , ids = []
           ;
 
         function cb(error, entity) {
-
+          should.not.exist(error);
           if (c >= n) {
             _.uniq(ids).should.eql(ids);
             done();
@@ -67,9 +68,11 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
           c += 1;
         }
+
         getEngine(function(error, engine) {
+          var item = { a:1 };
           for (var i = 0; i < n; i += 1) {
-            engine.create({ a:1 }, cb);
+            engine.create(item, cb);
           }
         });
 
@@ -98,19 +101,20 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
         getEngine(function(error, engine) {
           engine.create(original, function(error, entity) {
-            console.log(entity);
+            should.not.exist(error);
             entity._id.should.equal(0);
             done();
           });
         });
       });
 
-      it('should create a copy of the object before saving', function(done) {
+      it('should not retain reference to original object', function(done) {
 
         var item = { a: 1 };
 
         getEngine(function(error, engine) {
           insertObjects(engine, [item, item], function(error) {
+            should.not.exist(error);
             engine.find({}, {}, function(error, objects) {
               objects[0][idProperty].should.not.equal(objects[1][idProperty]);
               done();
@@ -385,8 +389,8 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
       it('should return array of objects that match all properties in query ', function(done) {
         getEngine(function(error, engine) {
-          insertObjects(engine, [{ a:1 }, { a:1 }, { a:1 }, { b:1 }], function(error) {
-            engine.find({ a: 1 }, {}, function(error, objects) {
+          insertObjects(engine, [{ findTest:1 }, { findTest:1 }, { findTest:1 }, { b:1 }], function(error) {
+            engine.find({ findTest: 1 }, {}, function(error, objects) {
               objects.length.should.equal(3);
               done();
             });
@@ -408,7 +412,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should return array of objects in ascending order', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, [{ a:3 }, { a:1 }, { a:2 }], function(error) {
-            engine.find({}, { $sort: { a: 1} }, function(error, objects) {
+            engine.find({}, { sort: 'a' }, function(error, objects) {
               objects[0].a.should.equal(1);
               objects[1].a.should.equal(2);
               objects[2].a.should.equal(3);
@@ -421,7 +425,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should return array of objects in descending order', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, [{ a:3 }, { a:1 }, { a:2 }], function(error) {
-            engine.find({}, { $sort: { a: -1 } }, function(error, objects) {
+            engine.find({}, { sort: [['a', 'desc']] }, function(error, objects) {
               objects[0].a.should.equal(3);
               objects[1].a.should.equal(2);
               objects[2].a.should.equal(1);
@@ -475,7 +479,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should only return the first of object when many objects match a query ', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, [{ a:3 }, { a:1 }, { a:2 }], function(error) {
-            engine.findOne({}, { $sort: { a: 1} }, function(error, object) {
+            engine.findOne({}, { sort: 'a' }, function(error, object) {
               object.a.should.equal(1);
               done();
             });
