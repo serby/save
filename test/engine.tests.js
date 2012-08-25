@@ -446,9 +446,8 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should return undefined when no data matches query ', function(done) {
 
         getEngine(function(error, engine) {
-          engine.findOne({ a: 1 }, {}, function(error, object) {
-
-            (object === undefined).should.equal(true);
+          engine.findOne({ a: 1 }, function(error, object) {
+            should.not.exist(object);
             done();
           });
         });
@@ -461,7 +460,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
             done();
           });
 
-          engine.findOne({ a: 1 }, {}, function(error, objects) {
+          engine.findOne({ a: 1 }, function(error, objects) {
           });
 
         });
@@ -470,7 +469,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should return an object for a single clause query that matches an existing object ', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, { a:1 }, function(error) {
-            engine.findOne({ a: 1 }, {}, function(error, object) {
+            engine.findOne({ a: 1 }, function(error, object) {
               object.a.should.equal(1);
               done();
             });
@@ -481,8 +480,8 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should only return the first of object when many objects match a query ', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, [{ a:3 }, { a:1 }, { a:2 }], function(error) {
-            engine.findOne({}, { sort: 'a' }, function(error, object) {
-              object.a.should.equal(1);
+            engine.findOne({}, function(error, object) {
+              object.a.should.equal(3);
               done();
             });
           });
