@@ -263,11 +263,11 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
       it('should emit a \'deleteOne\' event', function(done) {
         getEngine(function(error, engine) {
-          engine.on('deleteOne', function(entity) {
-            entity.should.eql({ a: 1, _id: 1 });
-            done();
-          });
           engine.create({ a: 1 }, function(error, insertedObject) {
+            engine.on('deleteOne', function(entity) {
+              entity.should.eql(insertedObject);
+              done();
+            });
             engine.deleteOne(insertedObject);
           });
         });
@@ -277,20 +277,6 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         getEngine(function(error, engine) {
           engine.deleteOne({ a: 1 }, function(error) {
             error.message.should.eql('Object has no \'' + idProperty + '\' property');
-            done();
-          });
-        });
-      });
-
-      it('should error if there are no objects in the store with given id', function(done) {
-        getEngine(function(error, engine) {
-          var entity = { a: 1 };
-
-          // Assigning an id that doesnt exist
-          entity[idProperty] = 1;
-
-          engine.deleteOne(entity, function(error) {
-            error.message.should.equal('No object found with \'' + idProperty + '\' = \'1\'');
             done();
           });
         });
@@ -336,11 +322,11 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         });
       });
 
-      it('should error if there are no objects to delete', function(done) {
+      it('should not error if there are no objects to delete', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }], function(error) {
             engine.delete({ a: 5 }, function(error) {
-              error.message.should.eql('No items to delete with that query');
+              should.not.exist(error);
               done();
             });
           });
