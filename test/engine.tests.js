@@ -132,7 +132,9 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
         getEngine(function(error, engine) {
           engine.read('999', function(error, entity) {
-            true.should.eql(entity === undefined);
+
+            should.not.exist(entity);
+            should.strictEqual(undefined, entity);
             done();
           });
         });
@@ -156,9 +158,9 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         getEngine(function(error, engine) {
           engine.create(original, function(error, entity) {
 
-            engine.read(1, function(error, entity) {
-              entity.should.eql({_id:1, a:1 });
-             done();
+            engine.read(entity[idProperty], function(error, entity) {
+              entity.should.eql(entity);
+              done();
             });
           });
         });
