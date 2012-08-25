@@ -476,18 +476,6 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
           });
         });
       });
-
-      it('should only return the first of object when many objects match a query ', function(done) {
-        getEngine(function(error, engine) {
-          insertObjects(engine, [{ a:3 }, { a:1 }, { a:2 }], function(error) {
-            engine.findOne({}, function(error, object) {
-              object.a.should.equal(3);
-              done();
-            });
-          });
-        });
-      });
-
     });
 
     describe('#count()', function() {
