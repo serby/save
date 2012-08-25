@@ -305,7 +305,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
           var objectToDelete = { a: 1 };
           insertObjects(engine, [objectToDelete, objectToDelete, { a:2 }, { b:1 }], function(error) {
             engine.delete(objectToDelete, function(error) {
-              (error === null).should.eql(true);
+              should.not.exist(error);
 
               engine.find({}, {}, function(error, objects) {
 
@@ -326,11 +326,11 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
       it('should emit a \'delete\' event', function(done) {
         getEngine(function(error, engine) {
-          engine.on('delete', function(entity) {
-            entity.should.eql({ a: 1, _id: 1 });
-            done();
-          });
           engine.create({ a: 1 }, function(error, insertedObject) {
+            engine.on('delete', function(entity) {
+              entity.should.eql(insertedObject);
+              done();
+            });
             engine.delete(insertedObject);
           });
         });
