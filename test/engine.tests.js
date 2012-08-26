@@ -160,7 +160,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
             engine.read(entity[idProperty], function(error, entity) {
               entity.should.eql(entity);
-              done();
+             done();
             });
           });
         });
@@ -187,10 +187,10 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should emit a \'update\' event', function(done) {
         getEngine(function(error, engine) {
           engine.create({ a: 1 }, function(error, insertedObject) {
-            engine.on('update', function(entity) {
+          engine.on('update', function(entity) {
               entity.should.eql(insertedObject);
-              done();
-            });
+            done();
+          });
             engine.update(insertedObject);
           });
         });
@@ -266,10 +266,10 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should emit a \'deleteOne\' event', function(done) {
         getEngine(function(error, engine) {
           engine.create({ a: 1 }, function(error, insertedObject) {
-            engine.on('deleteOne', function(entity) {
+          engine.on('deleteOne', function(entity) {
               entity.should.eql(insertedObject);
-              done();
-            });
+            done();
+          });
             engine.deleteOne(insertedObject);
           });
         });
@@ -284,7 +284,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         });
       });
 
-    });
+          });
 
     describe('#delete()', function() {
 
@@ -315,10 +315,10 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should emit a \'delete\' event', function(done) {
         getEngine(function(error, engine) {
           engine.create({ a: 1 }, function(error, insertedObject) {
-            engine.on('delete', function(entity) {
+          engine.on('delete', function(entity) {
               entity.should.eql(insertedObject);
-              done();
-            });
+            done();
+          });
             engine.delete(insertedObject);
           });
         });
@@ -464,7 +464,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
           });
         });
       });
-    });
+            });
 
     describe('#count()', function() {
 
