@@ -1,18 +1,18 @@
-# entity-store - Adapter to persist entity objects to various storage type. Redis, MongoDB etc
+# save - Adapter to persist entity objects to various storage type. Redis, MongoDB etc
 
-entity-store comes with a fully featured in memory engine which is super handy for testing your models.
+**save** comes with a fully featured in memory engine which is super handy for testing your models.
 For real world use you'll need to get one of the database powered engines:
-* [Redis](https://github.com/serby/entity-store-redis)
-* [MongoDB](https://github.com/serby/entity-store-mongodb)
-* [Postgres](https://github.com/serby/entity-store-postgres)
+* [Redis](https://github.com/serby/save-redis)
+* [MongoDB](https://github.com/serby/save-mongodb)
+* [Postgres](https://github.com/serby/save-postgres)
 
-If you database of choice isn't listed here please create an engine and send me a pull request.
+If you data store of choice isn't listed here please create an engine and send me a pull request.
 
-[![build status](https://secure.travis-ci.org/serby/entity-store.png)](http://travis-ci.org/serby/entity-store)
+[![build status](https://secure.travis-ci.org/serby/entity-store.png)](http://travis-ci.org/serby/save)
 
 ## Installation
 
-      npm install entity-store
+      npm install save
 
 ## Usage
 
