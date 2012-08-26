@@ -1,4 +1,4 @@
-# save - Adapter to persist entity objects to various storage type. Redis, MongoDB etc
+# save - A simple CRUD based persistence abstraction for storing objects to any backend data store. eg. Memory, MongoDB, Redis, CouchDB, Postgres, Punch Card etc.
 
 **save** comes with a fully featured in memory engine which is super handy for testing your models.
 For real world use you'll need to get one of the database powered engines:
