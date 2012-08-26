@@ -174,7 +174,9 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
         getEngine(function(error, engine) {
           engine.create({ a: 1 }, function(error, insertedObject) {
+            should.not.exist(error);
             engine.update(insertedObject, function(error, savedObject) {
+              should.not.exist(error);
               savedObject.should.eql(insertedObject);
               done();
             });
@@ -184,11 +186,11 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
       it('should emit a \'update\' event', function(done) {
         getEngine(function(error, engine) {
-          engine.on('update', function(entity) {
-            entity.should.eql({ a: 1, _id: 1 });
-            done();
-          });
           engine.create({ a: 1 }, function(error, insertedObject) {
+            engine.on('update', function(entity) {
+              entity.should.eql(insertedObject);
+              done();
+            });
             engine.update(insertedObject);
           });
         });
@@ -214,9 +216,9 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         });
       });
 
-      it('should not overwrite original properties', function(done) {
+      it('should modify and return object by adding new properties', function(done) {
         getEngine(function(error, engine) {
-          insertObjects(engine, { a: 1 }, function(error, objects) {
+          insertObjects(engine, { a: 1 , b: 1}, function(error, objects) {
             var extraSet = { b: 2};
             extraSet[idProperty] = objects[0][idProperty];
             engine.update(extraSet, function(error, savedObject) {
