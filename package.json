@@ -21,10 +21,10 @@
   }
 , "dependencies":
   { "lodash": "~0.3"
+  , "async": "~0.1"
   }
 , "devDependencies":
-  { "mocha": "~1.2"
-  , "should": "~0.6"
-  , "async": "~0.1"
+  { "mocha": "~1"
+  , "should": "~1"
   }
 }
