@@ -28,6 +28,14 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       }
     });
 
+    describe('#idProperty', function() {
+      it('should return name of the idProperty', function() {
+        getEngine(function(error, engine) {
+          engine.idProperty.should.eql('_id');
+        });
+      });
+    });
+
     describe('#create()', function() {
 
       it('should return the inserted entity with a new id', function(done) {
@@ -63,6 +71,8 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
             done();
 
           } else {
+            console.log(1,entity[idProperty]);
+            should.exist(entity[idProperty]);
             ids.push(entity[idProperty]);
           }
 
@@ -97,12 +107,12 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should allow idProperty to be defined', function(done) {
 
         var original = {  a: 1 };
-        original[idProperty] = 0;
+        original[idProperty] = '0';
 
         getEngine(function(error, engine) {
           engine.create(original, function(error, entity) {
             should.not.exist(error);
-            entity._id.should.equal(0);
+            entity._id.should.equal('0');
             done();
           });
         });
@@ -339,6 +349,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
     describe('#find()', function() {
 
+
       it('should return empty array when no data matches query ', function(done) {
         getEngine(function(error, engine) {
           engine.find({ a: 1 }, {}, function(error, objects) {
@@ -370,6 +381,21 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
             engine.find({ a: 1 }, {}, function(error, objects) {
               objects.should.not.be.empty;
               objects[0].a.should.equal(1);
+              done();
+            });
+          });
+        });
+
+      });
+
+
+      it('should not error if a query property is not in object collection', function(done) {
+
+        getEngine(function(error, engine) {
+          insertObjects(engine, { a:1 }, function(error) {
+            engine.find({ b: 1 }, {}, function(error, objects) {
+              should.not.exist(error);
+              objects.should.be.empty;
               done();
             });
           });
