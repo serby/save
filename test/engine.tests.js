@@ -71,7 +71,6 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
             done();
 
           } else {
-            console.log(1,entity[idProperty]);
             should.exist(entity[idProperty]);
             ids.push(entity[idProperty]);
           }
@@ -256,12 +255,12 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
     });
 
-    describe('#deleteOne()', function() {
+    describe('#delete()', function() {
 
       it('should delete the entity', function(done) {
         getEngine(function(error, engine) {
           engine.create({ a: 1 }, function(error, insertedObject) {
-            engine.deleteOne(insertedObject, function(error) {
+            engine.delete(insertedObject, function(error) {
               (error === undefined).should.equal(true);
               engine.find(insertedObject, {}, function(error, objects) {
 
@@ -273,21 +272,21 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         });
       });
 
-      it('should emit a \'deleteOne\' event', function(done) {
+      it('should emit a \'delete\' event', function(done) {
         getEngine(function(error, engine) {
           engine.create({ a: 1 }, function(error, insertedObject) {
-          engine.on('deleteOne', function(entity) {
+          engine.on('delete', function(entity) {
               entity.should.eql(insertedObject);
             done();
           });
-            engine.deleteOne(insertedObject);
+            engine.delete(insertedObject);
           });
         });
       });
 
       it('should error if there is no id property', function(done) {
         getEngine(function(error, engine) {
-          engine.deleteOne({ a: 1 }, function(error) {
+          engine.delete({ a: 1 }, function(error) {
             error.message.should.eql('Object has no \'' + idProperty + '\' property');
             done();
           });
@@ -296,13 +295,13 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
           });
 
-    describe('#delete()', function() {
+    describe('#deleteMany()', function() {
 
       it('should delete the entity if the delete query matches', function(done) {
         getEngine(function(error, engine) {
           var objectToDelete = { a: 1 };
           insertObjects(engine, [objectToDelete, objectToDelete, { a:2 }, { b:1 }], function(error) {
-            engine.delete(objectToDelete, function(error) {
+            engine.deleteMany(objectToDelete, function(error) {
               should.not.exist(error);
 
               engine.find({}, {}, function(error, objects) {
@@ -322,14 +321,14 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       });
 
 
-      it('should emit a \'delete\' event', function(done) {
+      it('should emit a \'deleteMany\' event', function(done) {
         getEngine(function(error, engine) {
           engine.create({ a: 1 }, function(error, insertedObject) {
-          engine.on('delete', function(entity) {
+          engine.on('deleteMany', function(entity) {
               entity.should.eql(insertedObject);
             done();
           });
-            engine.delete(insertedObject);
+            engine.deleteMany(insertedObject);
           });
         });
       });
@@ -337,7 +336,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should not error if there are no objects to delete', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }], function(error) {
-            engine.delete({ a: 5 }, function(error) {
+            engine.deleteMany({ a: 5 }, function(error) {
               should.not.exist(error);
               done();
             });
