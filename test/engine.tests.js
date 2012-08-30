@@ -169,7 +169,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
             engine.read(entity[idProperty], function(error, entity) {
               entity.should.eql(entity);
-             done();
+              done();
             });
           });
         });
@@ -260,7 +260,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should delete the entity', function(done) {
         getEngine(function(error, engine) {
           engine.create({ a: 1 }, function(error, insertedObject) {
-            engine.delete(insertedObject, function(error) {
+            engine.delete(insertedObject[idProperty], function(error) {
               (error === undefined).should.equal(true);
               engine.find(insertedObject, {}, function(error, objects) {
 
@@ -275,25 +275,15 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
       it('should emit a \'delete\' event', function(done) {
         getEngine(function(error, engine) {
           engine.create({ a: 1 }, function(error, insertedObject) {
-          engine.on('delete', function(entity) {
-              entity.should.eql(insertedObject);
-            done();
-          });
-            engine.delete(insertedObject);
-          });
-        });
-      });
-
-      it('should error if there is no id property', function(done) {
-        getEngine(function(error, engine) {
-          engine.delete({ a: 1 }, function(error) {
-            error.message.should.eql('Object has no \'' + idProperty + '\' property');
-            done();
+            engine.on('delete', function(entity) {
+              entity.should.eql(insertedObject[idProperty]);
+              done();
+            });
+            engine.delete(insertedObject[idProperty]);
           });
         });
       });
-
-          });
+    });
 
     describe('#deleteMany()', function() {
 
