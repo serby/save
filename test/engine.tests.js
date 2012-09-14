@@ -338,7 +338,6 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
     describe('#find()', function() {
 
-
       it('should return empty array when no data matches query ', function(done) {
         getEngine(function(error, engine) {
           engine.find({ a: 1 }, {}, function(error, objects) {
@@ -363,11 +362,25 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         });
       });
 
-      it('should return array of objects for a single clause query that matches existing objects ', function(done) {
+      it('should return array of objects for a single clause query that matches existing objects', function(done) {
 
         getEngine(function(error, engine) {
           insertObjects(engine, { a:1 }, function(error) {
             engine.find({ a: 1 }, {}, function(error, objects) {
+              objects.should.not.be.empty;
+              objects[0].a.should.equal(1);
+              done();
+            });
+          });
+        });
+
+      });
+
+      it('should still return expected objects when callback is second parameter', function(done) {
+
+        getEngine(function(error, engine) {
+          insertObjects(engine, { a:1 }, function(error) {
+            engine.find({ a: 1 }, function(error, objects) {
               objects.should.not.be.empty;
               objects[0].a.should.equal(1);
               done();
@@ -479,7 +492,18 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
           });
         });
       });
+
+      it('should use options to shape results', function(done) {
+        getEngine(function(error, engine) {
+          insertObjects(engine, [{ a:3 }, { a:1 }, { a:2 }], function(error) {
+            engine.findOne({}, { sort: [['a', 'asc']] }, function(error, object) {
+              object.a.should.equal(1);
+              done();
             });
+          });
+        });
+      });
+    });
 
     describe('#count()', function() {
 
