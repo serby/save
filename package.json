@@ -18,11 +18,11 @@
   }
 , "engine": ">=0.8"
 , "dependencies":
-  { "lodash": "*"
-  , "async": "*"
+  { "async": "*"
   }
 , "devDependencies":
   { "mocha": "*"
   , "should": "*"
+  , "lodash": "*"
   }
 }
