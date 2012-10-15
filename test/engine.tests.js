@@ -341,7 +341,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         getEngine(function(error, engine) {
           engine.find({ a: 1 }, {}, function(error, objects) {
 
-            objects.lenght.should.eql(0)
+            objects.length.should.eql(0)
             done()
           })
         })
@@ -366,7 +366,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         getEngine(function(error, engine) {
           insertObjects(engine, { a:1 }, function() {
             engine.find({ a: 1 }, {}, function(error, objects) {
-              objects.lenght.should.eql(0)
+              objects.length.should.not.eql(0)
               objects[0].a.should.equal(1)
               done()
             })
@@ -380,7 +380,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         getEngine(function(error, engine) {
           insertObjects(engine, { a:1 }, function() {
             engine.find({ a: 1 }, function(error, objects) {
-              objects.lenght.should.not.eql(0)
+              objects.length.should.not.eql(0)
               objects[0].a.should.equal(1)
               done()
             })
@@ -396,7 +396,7 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
           insertObjects(engine, { a:1 }, function() {
             engine.find({ b: 1 }, {}, function(error, objects) {
               should.not.exist(error)
-              objects.lenght.should.eql(0)
+              objects.length.should.eql(0)
               done()
             })
           })
