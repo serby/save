@@ -1,5 +1,5 @@
 function getEngine(callback) {
-  callback(undefined, require('../lib/memory-engine')());
+  callback(undefined, require('../lib/memory-engine')())
 }
 
-require('./engine.tests')('_id', getEngine);
+require('./engine.tests')('_id', getEngine)
