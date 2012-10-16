@@ -213,6 +213,20 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         })
       })
 
+      it('should error if there an id property that is null/undefined', function(done) {
+        getEngine(function(error, engine) {
+          engine.update({ _id: null, a: 1 }, function(error) {
+            error.message.should.eql('Object has no \'' + idProperty + '\' property')
+            getEngine(function(error, engine) {
+              engine.update({ _id: undefined, a: 1 }, function(error) {
+                error.message.should.eql('Object has no \'' + idProperty + '\' property')
+                done()
+              })
+            })
+          })
+        })
+      })
+
       it('should error if there are no objects in the store with given id', function(done) {
         getEngine(function(error, engine) {
           var object = { a: 1 }
