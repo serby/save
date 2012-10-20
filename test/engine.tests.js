@@ -348,6 +348,15 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
 
       })
 
+
+      it('should throw error is callback is missing', function() {
+        getEngine(function(error, engine) {
+          (function() {
+            engine.find({ a: 1 })
+          }).should.throwError('callback must be a function')
+        })
+      })
+
       it('should emit a \'find\' event', function(done) {
         getEngine(function(error, engine) {
           engine.on('find', function(entity) {
