@@ -116,6 +116,24 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         })
       })
 
+      it('should not count falsy values as being a defined id', function(done) {
+
+        function checkFalsy(falsy, cb) {
+          var original = {}
+          original[idProperty] = falsy
+
+          getEngine(function(error, engine) {
+            should.not.exist(error)
+            engine.create(original, function(error, entity) {
+              should.notEqual(entity[idProperty], falsy)
+              cb()
+            })
+          })
+        }
+
+        async.forEach([null, undefined, '', false, 0, NaN], checkFalsy, done)
+      })
+
       it('should not retain reference to original object', function(done) {
 
         var item = { a: 1 }
