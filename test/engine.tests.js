@@ -116,6 +116,18 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         })
       })
 
+      it('should auto assign idProperty if is null', function(done) {
+        getEngine(function(error, engine) {
+          var o = { a:1 }
+          o[idProperty] = null
+          engine.create(o, function(error, entity) {
+            entity.should.have.property(idProperty)
+            should.notEqual(null, entity[idProperty])
+            done()
+          })
+        })
+      })
+
       it('should not retain reference to original object', function(done) {
 
         var item = { a: 1 }
