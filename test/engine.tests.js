@@ -449,6 +449,17 @@ module.exports = function(idProperty, getEngine, beforeCallback, afterCallback) 
         })
       })
 
+      it('should return array of all objects for an empty query {} when there are no options', function(done) {
+        getEngine(function(error, engine) {
+          insertObjects(engine, [{ a:1 }, { a:1 }, { a:1 }, { b:1 }], function() {
+            engine.find({}, function(error, objects) {
+              objects.length.should.equal(4)
+              done()
+            })
+          })
+        })
+      })
+
       it('should return array of objects in ascending order', function(done) {
         getEngine(function(error, engine) {
           insertObjects(engine, [{ a:3 }, { a:1 }, { a:2 }], function() {
