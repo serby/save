@@ -47,6 +47,7 @@ This event fires with `cb(err)` where `err` is any error that may have occured.
 
 ## Credits
 [Paul Serby](https://github.com/serby/) follow me on twitter [@serby](http://twitter.com/serby)
+
 [Dom Harrington](https://github.com/domharrington/)
 
 ## Licence
