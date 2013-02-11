@@ -14,6 +14,35 @@ If your data store of choice isn't listed here please create an engine and send 
 
 ## Usage
 
+## Events
+
+### s.on('create', cb)
+This event fires with `cb(object)` where `object` is the item that has been created.
+
+### s.on('update', cb)
+This event fires with `cb(object, overwrite)` where `object` is the item that has been updated and `overwrite` is whether the object is to be overwritten or extended.
+
+### s.on('delete', cb)
+This event fires with `cb(id)` where `id` is the item that has been deleted.
+
+### s.on('deleteMany', cb)
+This event fires with `cb(query)` where `query` is the query used to `deleteMany`.
+
+### s.on('read', cb)
+This event fires with `cb(id)` where `id` is the item that has been read.
+
+### s.on('find', cb)
+This event fires with `cb(query)` where `query` is the query used to `find`.
+
+### s.on('findOne', cb)
+This event fires with `cb(query)` where `query` is the query used to `findOne`.
+
+### s.on('count', cb)
+This event fires with `cb(query)` where `query` is the query used to `count`.
+
+### s.on('error', cb)
+This event fires with `cb(err)` where `err` is any error that may have occured.
+
 ## Credits
 [Paul Serby](https://github.com/serby/) follow me on twitter [@serby](http://twitter.com/serby)
 
