@@ -12,7 +12,20 @@ To see an example of how to create an engine, please see [save-mongodb](https://
 
 ## Installation
 
-      npm install save
+    npm install save
+
+## Example
+    var save = require('save')
+      , s = save('person')
+
+    s.on('create', function() {
+      console.log('New person created!')
+    })
+
+    s.create({ name: 'Dom' }, function(err, person) {
+      // Outputs { name: 'Dom', _id: 1 }
+      console.log(person)
+    })
 
 ## Usage
 
