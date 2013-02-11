@@ -7,7 +7,7 @@ For real world use you'll need to get one of the database powered engines:
 
 If your data store of choice isn't listed here please create an engine and send me a pull request.
 
-[![build status](https://secure.travis-ci.org/serby/entity-store.png)](http://travis-ci.org/serby/save)
+[![build status](https://api.travis-ci.org/serby/save.png)](http://travis-ci.org/serby/save)
 
 ## Installation
 
