@@ -28,6 +28,54 @@ To see an example of how to create an engine, please see [save-mongodb](https://
     })
 
 ## Usage
+    var save = require('save')
+
+### var s = save(name, [options])
+Save by default returns an in memory engine which means you can unit test your models independently from your database. `name` is the name of your model.
+
+Possible options are:
+
+* `idProperty`. Defaults to `_id` for mongodb
+* `logger`. Defaults to console logging: `{ info: console.info, verbose: console.info }`
+* `engine`. Persistence engine to use, defaults to memory engine: `require(./memory-engine)`
+
+### s.create(object, [cb])
+Creates a new entity.
+`cb` called with `cb(err, savedObject)`.
+
+### s.read(id, [cb])
+Reads a single entity with an `idProperty` of `id`.
+`cb` called with `cb(err, readObject)`.
+
+### s.update(object, overwrite, [cb])
+Updates a single entity. Optionally overwrites the entire entity, by default just extends it with the new values.
+`cb` called with `cb(err, readObject)`.
+
+### s.delete(id, [cb])
+Deletes one entity.
+Returns an error if the object can not be found.
+`cb` called with `cb(err)`.
+
+### s.deleteMany(query, [cb])
+Deletes entities based on a query.
+Performs a find by query, then calls delete for each item returned
+Returns an error if no items match the query.
+`cb` called with `cb(err)`.
+
+### s.find(query, options, cb)
+Performs a find on the data.
+`cb` called with `cb(err, foundObjectsArray)`.
+
+### s.findOne(query, options, cb)
+Performs a find on the data and limits the result set to 1.
+`cb` called with `cb(err, foundObject)`.
+
+### s.count(query, cb)
+Performs a count by query.
+`cb` called with `cb(err, count)`.
+
+### s.idProperty
+Provides access to the `idProperty`. Mostly used for testing.
 
 ## Events
 
