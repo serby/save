@@ -56,6 +56,16 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
 
+      it('should emit a \'afterCreate\' event', function (done) {
+        getEngine(function (error, engine) {
+          engine.on('afterCreate', function (entity) {
+            entity.should.eql({ _id: 1 })
+            done()
+          })
+          engine.create({ _id: 1 })
+        })
+      })
+
       it('should always create a unique id', function (done) {
 
         var n = 15
@@ -222,6 +232,18 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
 
+      it('should emit a \'afterUpdate\' event', function (done) {
+        getEngine(function (error, engine) {
+          engine.create({ a: 1 }, function (error, insertedObject) {
+            engine.on('afterUpdate', function (entity) {
+              entity.should.eql(insertedObject)
+              done()
+            })
+            engine.update(insertedObject)
+          })
+        })
+      })
+
       it('should error if there is no id property', function (done) {
         getEngine(function (error, engine) {
           engine.update({ a: 1 }, function (error) {
@@ -315,6 +337,18 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
 
+      it('should emit a \'afterDelete\' event', function (done) {
+        getEngine(function (error, engine) {
+          engine.create({ a: 1 }, function (error, insertedObject) {
+            engine.on('afterDelete', function (entity) {
+              entity.should.eql(insertedObject[idProperty])
+              done()
+            })
+            engine['delete'](insertedObject[idProperty])
+          })
+        })
+      })
+
       it('should allow no callback', function () {
         getEngine(function (error, engine) {
           (function () {
@@ -362,6 +396,18 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         getEngine(function (error, engine) {
           engine.create({ a: 1 }, function (error, insertedObject) {
             engine.on('deleteMany', function (entity) {
+              entity.should.eql(insertedObject)
+              done()
+            })
+            engine.deleteMany(insertedObject)
+          })
+        })
+      })
+
+      it('should emit a \'afterDeleteMany\' event', function (done) {
+        getEngine(function (error, engine) {
+          engine.create({ a: 1 }, function (error, insertedObject) {
+            engine.on('afterDeleteMany', function (entity) {
               entity.should.eql(insertedObject)
               done()
             })
