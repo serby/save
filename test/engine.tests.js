@@ -35,6 +35,26 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
       })
     })
 
+    describe('#data', function () {
+
+      it('should return a empty object if no data is passed to it', function () {
+        getEngine(function (error, engine) {
+          engine.getData({}, function (data) {
+            data.should.should.eql({})
+          })
+        })
+      })
+
+      it('should return a object if data is passed to it', function () {
+        getEngine(function (error, engine) {
+          engine.getData({ a: 1 }, function (data) {
+            data.should.should.eql({ a: 1 })
+          })
+        })
+      })
+
+    })
+
     describe('#create()', function () {
 
       it('should return the inserted entity with a new id', function (done) {
