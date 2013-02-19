@@ -18,6 +18,18 @@ require('./engine.tests')('_id', getEngine)
 
 describe('file-engine', function () {
 
+  it('should save to file in options', function (done) {
+    var options = { filename: './data.json' }
+      , engine = require('../lib/file-engine')(options)
+
+    clearData(options.filename)
+    engine.create({ a: 1 }, function () {
+      var fileData = JSON.parse(fs.readFileSync(options.filename).toString())
+      fileData.should.eql({ 1: { a: 1, _id: 1 } })
+      done()
+    })
+  })
+
   it('should presist data between stores', function (done) {
     clearData()
     var engineOne = require('../lib/file-engine')()
