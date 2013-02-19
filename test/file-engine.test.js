@@ -6,10 +6,11 @@ function getEngine(callback) {
 }
 
 
-function clearData() {
+function clearData(file) {
+  file = file || './save.json'
   // Create a empty data store for each test
   try {
-    fs.unlinkSync('./save.json')
+    fs.unlinkSync(file)
   } catch (e) {
   }
 }
