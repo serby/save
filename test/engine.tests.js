@@ -529,6 +529,17 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
 
+      it('should return array of objects that match specified fields of a deep subdocument in query', function (done) {
+        getEngine(function (error, engine) {
+          insertObjects(engine, [{ findTest: { nested: 1 } }, { findTest: { nested: { nested: 1 } } }, { findTest: { nested: { nested: 1 } } }, { b: 1 }], function () {
+            engine.find({ 'findTest.nested.nested': 1 }, {}, function (error, objects) {
+              objects.length.should.equal(2)
+              done()
+            })
+          })
+        })
+      })
+
       it('should return array of all objects for an empty query {}', function (done) {
         getEngine(function (error, engine) {
           insertObjects(engine, [{ a: 1 }, { a: 1 }, { a: 1 }, { b: 1 }], function () {
