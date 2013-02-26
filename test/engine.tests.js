@@ -518,6 +518,17 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
 
+      it('should return all objects with properties in a given array ($in)', function (done) {
+        getEngine(function (error, engine) {
+          insertObjects(engine, [{ findTest: 1 }, { findTest: 2 }, { findTest: 3 }], function () {
+            engine.find({ findTest: { $in : [1, 3] } }, {}, function (error, objects) {
+              objects.length.should.equal(2)
+              done()
+            })
+          })
+        })
+      })
+
       it('should return array of objects that match specified fields of a subdocument in query', function (done) {
         getEngine(function (error, engine) {
           insertObjects(engine, [{ findTest: { nested: 1 } }, { findTest: { nested: 1 } }, { findTest: { nested: 2 } }, { b: 1 }], function () {
