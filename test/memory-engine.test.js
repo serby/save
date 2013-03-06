@@ -1,9 +1,3 @@
-function getEngine(callback) {
-  callback(undefined, require('../lib/memory-engine')())
-}
-
-require('./engine.tests')('_id', getEngine)
-
 describe('#data', function () {
 
   it('should return a empty object if no options set', function () {
