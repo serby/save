@@ -142,13 +142,32 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
           insertObjects(engine, [item, item], function (error) {
             should.not.exist(error)
             engine.find({}, {}, function (error, objects) {
-              objects[0][idProperty].should.not.equal(objects[1][idProperty])
+              objects[0].a = 2
+              objects[1].a.should.equal(1)
               done()
             })
           })
         })
       })
 
+      it('should return a new cloned object', function () {
+        var data = { a: 1 }
+      , dataClone = _.clone(data)
+      , engine = require('../lib/memory-engine')()
+
+        engine.create(data, function (error, object) {
+
+          delete object.a
+
+          object.should.not.eql(dataClone)
+          data.should.have.property('a')
+
+          engine.read(object._id, function (error, item) {
+            item.should.have.property('a')
+            item.should.have.property('_id')
+          })
+        })
+      })
     })
 
 
@@ -519,6 +538,24 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
           })
         })
       })
+
+      it('should return a new cloned object', function () {
+          var item = { a: 1 }
+            , dataClone = _.clone(item)
+
+          getEngine(function (error, engine) {
+            insertObjects(engine, [item], function (error, createdObject) {
+              delete createdObject.a
+
+              createdObject[0].should.not.eql(dataClone)
+              item.should.have.property('a')
+              engine.read(createdObject[0]._id, function (error, item) {
+                item.should.have.property('a')
+                item.should.have.property('_id')
+              })
+            })
+          })
+        })
 
       it('should return array of objects in the order given by multiple properties')
 
