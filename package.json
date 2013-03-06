@@ -19,6 +19,7 @@
 , "engine": ">=0.8"
 , "dependencies":
   { "async": "*"
+  , "lodash": "*"
   }
 , "devDependencies":
   { "mocha": "*"
