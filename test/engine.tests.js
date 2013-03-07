@@ -59,10 +59,11 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
       it('should emit a \'afterCreate\' event', function (done) {
         getEngine(function (error, engine) {
           engine.on('afterCreate', function (entity) {
-            entity.should.eql({ _id: 1 })
+
+            entity.should.eql({ _id: engine.idType(1) })
             done()
           })
-          engine.create({ _id: 1 })
+          engine.create({ _id: engine.idType(1) })
         })
       })
 
