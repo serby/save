@@ -80,16 +80,28 @@ Provides access to the `idProperty`. Mostly used for testing.
 ## Events
 
 ### s.on('create', cb)
+This event fires with `cb(object)` where `object` is the item that will be created.
+
+### s.on('afterCreate', cb)
 This event fires with `cb(object)` where `object` is the item that has been created.
 
 ### s.on('update', cb)
+This event fires with `cb(object, overwrite)` where `object` is the item that will be updated and `overwrite` is whether the object is to be overwritten or extended.
+
+### s.on('afterUpdate', cb)
 This event fires with `cb(object, overwrite)` where `object` is the item that has been updated and `overwrite` is whether the object is to be overwritten or extended.
 
 ### s.on('delete', cb)
+This event fires with `cb(id)` where `id` is the item that will be deleted.
+
+### s.on('afterDelete', cb)
 This event fires with `cb(id)` where `id` is the item that has been deleted.
 
 ### s.on('deleteMany', cb)
 This event fires with `cb(query)` where `query` is the query used to `deleteMany`.
+
+### s.on('afterDeleteMany', cb)
+This event fires with `cb(query)` where `query` is the query that has used `deleteMany`.
 
 ### s.on('read', cb)
 This event fires with `cb(id)` where `id` is the item that has been read.
