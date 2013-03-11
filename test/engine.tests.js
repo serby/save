@@ -94,8 +94,6 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
             should.not.exist(error)
 
-            console.log(objects)
-
             _.forEach(objects, function(object) {
               object.should.have.property(idProperty)
               should.strictEqual((typeof object[idProperty]), 'string')
