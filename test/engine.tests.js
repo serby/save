@@ -80,6 +80,30 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
 
+      it('unique id should always be a string', function (done) {
+
+        getEngine(function (error, engine) {
+
+          var fixtures =
+              [ { a: 1 }
+              , { _id: 6, a: 1 }
+              , { _id: '7', a: 1 }
+              ]
+
+          insertObjects(engine, fixtures, function (error, objects) {
+
+            should.not.exist(error)
+
+            _.forEach(objects, function(object) {
+              object.should.have.property(idProperty)
+              should.strictEqual((typeof object[idProperty]), 'string')
+            })
+
+            done()
+          })
+        })
+      })
+
       it('should always create a unique id', function (done) {
 
         var n = 15
