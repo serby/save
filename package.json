@@ -1,29 +1,30 @@
-{ "author": "Paul Serby <paul@serby.net>"
-, "name": "save"
-, "description": "A simple CRUD based persistence abstraction for storing objects to any backend data store. eg. Memory, MongoDB, Redis, CouchDB, Postgres, Punch Card etc."
-, "version": "0.0.17"
-, "tags":
-  [ "data"
-  , "database"
-  , "ORM"
-  , "it's not an ORM"
-  ]
-, "repository":
-  { "type": "git"
-  , "url": "git@github.com:serby/save"
-  }
-, "main": "lib/save"
-, "scripts":
-  { "test": "./node_modules/mocha/bin/mocha -r should"
-  }
-, "engine": ">=0.8"
-, "dependencies":
-  { "async": "*"
-  , "lodash": "*"
-  }
-, "devDependencies":
-  { "mocha": "*"
-  , "should": "*"
-  , "lodash": "*"
+{
+  "author": "Paul Serby <paul@serby.net>",
+  "name": "save",
+  "description": "A simple CRUD based persistence abstraction for storing objects to any backend data store. eg. Memory, MongoDB, Redis, CouchDB, Postgres, Punch Card etc.",
+  "version": "0.0.18",
+  "tags": [
+    "data",
+    "database",
+    "ORM",
+    "it's not an ORM"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:serby/save"
+  },
+  "main": "lib/save",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha -r should"
+  },
+  "engine": ">=0.8",
+  "dependencies": {
+    "async": "*",
+    "lodash": "~1"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "lodash": "*"
   }
 }
