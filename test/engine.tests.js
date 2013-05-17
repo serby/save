@@ -414,7 +414,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
     describe('#updateMany()', function () {
 
-      it('should update many', function (done) {
+      it.skip('should update many', function (done) {
 
         getEngine(function (error, engine) {
           var objectToUpdate = { a: 1 }
