@@ -2,7 +2,7 @@
   "author": "Paul Serby <paul@serby.net>",
   "name": "save",
   "description": "A simple CRUD based persistence abstraction for storing objects to any backend data store. eg. Memory, MongoDB, Redis, CouchDB, Postgres, Punch Card etc.",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "tags": [
     "data",
     "database",
@@ -20,7 +20,7 @@
   "engine": ">=0.8",
   "dependencies": {
     "async": "*",
-    "lodash": "~1"
+    "lodash": "*"
   },
   "devDependencies": {
     "mocha": "*",
