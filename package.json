@@ -2,7 +2,7 @@
   "author": "Paul Serby <paul@serby.net>",
   "name": "save",
   "description": "A simple CRUD based persistence abstraction for storing objects to any backend data store. eg. Memory, MongoDB, Redis, CouchDB, Postgres, Punch Card etc.",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "tags": [
     "data",
     "database",
@@ -14,7 +14,7 @@
     "url": "git@github.com:serby/save"
   },
   "publishConfig": {
-    "registry":"http://registry.npmjs.org"
+    "registry": "http://registry.npmjs.org"
   },
   "main": "lib/save",
   "scripts": {
