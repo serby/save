@@ -33,6 +33,12 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
           engine.idProperty.should.eql('_id')
         })
       })
+
+      it('should should be able to change the idProperty', function () {
+        getEngine({ idProperty: 'hello' }, function (error, engine) {
+          engine.idProperty.should.eql('hello')
+        })
+      })
     })
 
     describe('#create()', function () {
