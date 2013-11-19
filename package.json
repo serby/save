@@ -18,7 +18,11 @@
   },
   "main": "lib/save",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha -r should"
+    "lint": "./node_modules/.bin/jshint .",
+    "pretest": "npm run-script lint",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive -R spec -r should",
+    "posttest": "./node_modules/.bin/istanbul check-coverage && rm -rf coverage",
+    "prepublish": "npm test && npm prune"
   },
   "engine": ">=0.8",
   "dependencies": {
@@ -28,6 +32,8 @@
   "devDependencies": {
     "mocha": "*",
     "should": "*",
-    "lodash": "*"
+    "lodash": "*",
+    "istanbul": "~0.1.45",
+    "jshint": "~2.3.0"
   }
 }
