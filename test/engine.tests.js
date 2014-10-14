@@ -11,7 +11,7 @@ function insertObjects(engine, objects, callback) {
 
 module.exports = function (idProperty, getEngine, beforeCallback, afterCallback) {
 
-  describe('memory-engine', function () {
+  describe('engine', function () {
 
     before(function (done) {
       if (typeof beforeCallback === 'function') {
@@ -81,10 +81,10 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         getEngine(function (error, engine) {
           engine.on('afterCreate', function (entity) {
 
-            entity.should.eql({ _id: engine.idType(1) })
+            entity.should.eql({ _id: '1' })
             done()
           })
-          engine.create({ _id: engine.idType(1) })
+          engine.create({ _id: 1 })
         })
       })
 
@@ -158,14 +158,14 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
 
-      it('should add id of the correct type', function (done) {
+      it('should retrieve ids as strings', function (done) {
 
         var original = { a: 1 }
 
         getEngine(function (error, engine) {
           engine.create(original, function (error, entity) {
 
-            entity[idProperty].should.equal(engine.idType(entity[idProperty]))
+            entity[idProperty].should.be.type('string')
 
             done()
           })
@@ -281,7 +281,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
 
-      it('should return idProperty of correct type', function (done) {
+      it('should return id of type String', function (done) {
 
         var original = { a: 1 }
 
@@ -290,7 +290,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
             engine.read(entity[idProperty], function (error, entity) {
 
-              entity[idProperty].should.equal(engine.idType(entity[idProperty]))
+              entity[idProperty].should.be.type('string')
 
               done()
             })
@@ -402,14 +402,14 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
 
-      it('should return id of the correct type', function (done) {
+      it('should return id of type String', function (done) {
         getEngine(function (error, engine) {
           insertObjects(engine, { a: 1 }, function (error, objects) {
             var newObject = { b: 2 }
             newObject[idProperty] = objects[0][idProperty]
             engine.update(newObject, true, function (error, savedObject) {
-              savedObject[idProperty].should.equal(
-                engine.idType(savedObject[idProperty]))
+              console.log(typeof savedObject[idProperty])
+              savedObject[idProperty].should.be.type('string')
               done()
             })
 
@@ -754,12 +754,11 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
       it('should return array of objects in the order given by multiple properties')
 
 
-      it('should id with correct type', function (done) {
+      it('should return id of type string', function (done) {
         getEngine(function (error, engine) {
           insertObjects(engine, [{ a: 3 }], function () {
             engine.find({}, { sort: [['a', 'desc']] }, function (error, objects) {
-              objects[0][idProperty].should.equal(
-                engine.idType(objects[0][idProperty]))
+              objects[0][idProperty].should.be.type('string')
               done()
             })
           })
@@ -793,12 +792,11 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
 
-      it('should id with correct type', function (done) {
+      it('should return id of type string', function (done) {
         getEngine(function (error, engine) {
           insertObjects(engine, [{ a: 3 }], function () {
             engine.findOne({}, function (error, object) {
-              object[idProperty].should.equal(
-                engine.idType(object[idProperty]))
+              object[idProperty].should.be.type('string')
               done()
             })
           })
