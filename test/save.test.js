@@ -7,7 +7,7 @@ describe('save()', function () {
 
   })
   it('should fire a find event', function () {
-    var save = require('..')('jim', { logger: { info: function () {}}})
+    var save = require('..')('jim', { logger: { info: function () {} } })
     save.find({}, function () {})
   })
 })
