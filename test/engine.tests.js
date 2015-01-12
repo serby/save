@@ -4,7 +4,7 @@ var _ = require('lodash')
 
 function insertObjects(engine, objects, callback) {
   if (!Array.isArray(objects)) {
-    objects = [objects]
+    objects = [ objects ]
   }
   async.map(objects, engine.create, callback)
 }
@@ -56,7 +56,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should correctly insert an entity with a nested object', function (done) {
 
-        var testObject = { a: 1, b: {a: 2, b: 2}}
+        var testObject = { a: 1, b: { a: 2, b: 2 }}
 
         getEngine(function (error, engine) {
           engine.create(testObject, function (error, entity) {
@@ -117,7 +117,6 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         var n = 15
           , c = 1
           , ids = []
-
 
         function cb(error, entity) {
           should.not.exist(error)
@@ -201,7 +200,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
           })
         }
 
-        async.forEach([null, undefined, '', false, 0, NaN], checkFalsy, done)
+        async.forEach([ null, undefined, '', false, 0, NaN ], checkFalsy, done)
       })
 
       it('should not retain reference to original object', function (done) {
@@ -209,7 +208,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         var item = { a: 1 }
 
         getEngine(function (error, engine) {
-          insertObjects(engine, [item, item], function (error) {
+          insertObjects(engine, [ item, item ], function (error) {
             should.not.exist(error)
             engine.find({}, {}, function (error, objects) {
               objects[0].a = 2
@@ -239,7 +238,6 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
       })
     })
-
 
     describe('#read()', function () {
 
@@ -377,7 +375,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
       it('should modify and return object by adding new properties', function (done) {
         getEngine(function (error, engine) {
           insertObjects(engine, { a: 1, b: 1 }, function (error, objects) {
-            var extraSet = { b: 2}
+            var extraSet = { b: 2 }
             extraSet[idProperty] = objects[0][idProperty]
             engine.update(extraSet, function (error, savedObject) {
               var compositeObject = _.extend({}, objects[0], extraSet)
@@ -419,18 +417,17 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
     })
 
-
     describe('#updateMany()', function () {
 
       it.skip('should update many', function (done) {
 
         getEngine(function (error, engine) {
           var objectToUpdate = { a: 1 }
-          insertObjects(engine, [objectToUpdate, objectToUpdate, { a: 2 }, { b: 1 }], function (error) {
+          insertObjects(engine, [  objectToUpdate, objectToUpdate, { a: 2 }, { b: 1 } ], function (error) {
             should.not.exist(error)
-            engine.updateMany({ a: 1} , { c: 3}, function (error) {
+            engine.updateMany({ a: 1 } , { c: 3 }, function (error) {
               should.not.exist(error)
-              engine.find({ a: 1}, function (error, items) {
+              engine.find({ a: 1 }, function (error, items) {
                 items[0].should.include({ a: 1, c: 3 })
                 items[1].should.include({ a: 1, c: 3 })
                 items.length.should.equal(2)
@@ -505,7 +502,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
       it('should delete the entity if the delete query matches', function (done) {
         getEngine(function (error, engine) {
           var objectToDelete = { a: 1 }
-          insertObjects(engine, [objectToDelete, objectToDelete, { a: 2 }, { b: 1 }], function () {
+          insertObjects(engine, [ objectToDelete, objectToDelete, { a: 2 }, { b: 1 } ], function () {
             engine.deleteMany(objectToDelete, function (error) {
               should.not.exist(error)
 
@@ -524,7 +521,6 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
           })
         })
       })
-
 
       it('should emit a \'deleteMany\' event', function (done) {
         getEngine(function (error, engine) {
@@ -552,7 +548,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should not error if there are no objects to delete', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }], function () {
+          insertObjects(engine, [ { a: 1 }, { a: 2 }, { a: 3 }, { a: 4 } ], function () {
             engine.deleteMany({ a: 5 }, function (error) {
               should.not.exist(error)
               done()
@@ -575,7 +571,6 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
         })
 
       })
-
 
       it('should throw error is callback is missing', function () {
         getEngine(function (error, engine) {
@@ -626,7 +621,6 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       })
 
-
       it('should not error if a query property is not in object collection', function (done) {
 
         getEngine(function (error, engine) {
@@ -643,7 +637,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return array of objects that match all properties in query ', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ findTest: 1 }, { findTest: 1 }, { findTest: 1 }, { b: 1 }], function () {
+          insertObjects(engine, [ { findTest: 1 }, { findTest: 1 }, { findTest: 1 }, { b: 1 } ], function () {
             engine.find({ findTest: 1 }, {}, function (error, objects) {
               objects.length.should.equal(3)
               done()
@@ -654,8 +648,8 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return all objects with properties in a given array ($in)', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ findTest: 1 }, { findTest: 2 }, { findTest: 3 }], function () {
-            engine.find({ findTest: { $in : [1, 3] } }, {}, function (error, objects) {
+          insertObjects(engine, [ { findTest: 1 }, { findTest: 2 }, { findTest: 3 } ], function () {
+            engine.find({ findTest: { $in: [ 1, 3 ] } }, {}, function (error, objects) {
               objects.length.should.equal(2)
               done()
             })
@@ -665,7 +659,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return array of objects that match specified fields of a subdocument in query', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ findTest: { nested: 1 } }, { findTest: { nested: 1 } }, { findTest: { nested: 2 } }, { b: 1 }], function () {
+          insertObjects(engine, [ { findTest: { nested: 1 } }, { findTest: { nested: 1 } }, { findTest: { nested: 2 } }, { b: 1 } ], function () {
             engine.find({ 'findTest.nested': 1 }, {}, function (error, objects) {
               objects.length.should.equal(2)
               done()
@@ -676,7 +670,11 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return array of objects that match specified fields of a deep subdocument in query', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ findTest: { nested: 1 } }, { findTest: { nested: { nested: 1 } } }, { findTest: { nested: { nested: 1 } } }, { b: 1 }], function () {
+          insertObjects(engine
+            , [ { findTest: { nested: 1 } }
+              , { findTest: { nested: { nested: 1 } } }
+              , { findTest: { nested: { nested: 1 } } }
+              , { b: 1 } ], function () {
             engine.find({ 'findTest.nested.nested': 1 }, {}, function (error, objects) {
               objects.length.should.equal(2)
               done()
@@ -687,7 +685,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return array of all objects for an empty query {}', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ a: 1 }, { a: 1 }, { a: 1 }, { b: 1 }], function () {
+          insertObjects(engine, [ { a: 1 }, { a: 1 }, { a: 1 }, { b: 1 } ], function () {
             engine.find({}, {}, function (error, objects) {
               objects.length.should.equal(4)
               done()
@@ -698,7 +696,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return array of all objects for an empty query {} when there are no options', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ a: 1 }, { a: 1 }, { a: 1 }, { b: 1 }], function () {
+          insertObjects(engine, [ { a: 1 }, { a: 1 }, { a: 1 }, { b: 1 } ], function () {
             engine.find({}, function (error, objects) {
               objects.length.should.equal(4)
               done()
@@ -709,7 +707,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return array of objects in ascending order', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ a: 3 }, { a: 1 }, { a: 2 }], function () {
+          insertObjects(engine, [ { a: 3 }, { a: 1 }, { a: 2 } ], function () {
             engine.find({}, { sort: 'a' }, function (error, objects) {
               objects[0].a.should.equal(1)
               objects[1].a.should.equal(2)
@@ -722,8 +720,8 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return array of objects in descending order', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ a: 3 }, { a: 1 }, { a: 2 }], function () {
-            engine.find({}, { sort: [['a', 'desc']] }, function (error, objects) {
+          insertObjects(engine, [ { a: 3 }, { a: 1 }, { a: 2 } ], function () {
+            engine.find({}, { sort: [ [ 'a', 'desc' ] ] }, function (error, objects) {
               objects[0].a.should.equal(3)
               objects[1].a.should.equal(2)
               objects[2].a.should.equal(1)
@@ -738,7 +736,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
             , dataClone = _.clone(item)
 
           getEngine(function (error, engine) {
-            insertObjects(engine, [item], function (error, createdObject) {
+            insertObjects(engine, [ item ], function (error, createdObject) {
               delete createdObject.a
 
               createdObject[0].should.not.eql(dataClone)
@@ -753,11 +751,10 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return array of objects in the order given by multiple properties')
 
-
       it('should return id of type string', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ a: 3 }], function () {
-            engine.find({}, { sort: [['a', 'desc']] }, function (error, objects) {
+          insertObjects(engine, [ { a: 3 } ], function () {
+            engine.find({}, { sort: [ [ 'a', 'desc' ] ] }, function (error, objects) {
               objects[0][idProperty].should.be.type('string')
               done()
             })
@@ -794,7 +791,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return id of type string', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ a: 3 }], function () {
+          insertObjects(engine, [ { a: 3 } ], function () {
             engine.findOne({}, function (error, object) {
               object[idProperty].should.be.type('string')
               done()
@@ -816,8 +813,8 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should use options to shape results', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ a: 3 }, { a: 1 }, { a: 2 }], function () {
-            engine.findOne({}, { sort: [['a', 'asc']] }, function (error, object) {
+          insertObjects(engine, [ { a: 3 }, { a: 1 }, { a: 2 } ], function () {
+            engine.findOne({}, { sort: [ [ 'a', 'asc' ] ] }, function (error, object) {
               object.a.should.equal(1)
               done()
             })
@@ -852,7 +849,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return correct count if objects match query', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ a: 3 }, { a: 1 }, { a: 2 }, { a: 2 }], function () {
+          insertObjects(engine, [ { a: 3 }, { a: 1 }, { a: 2 }, { a: 2 } ], function () {
             engine.count({ a: 2 }, function (error, count) {
               count.should.equal(2)
               done()
@@ -863,7 +860,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should return total count with a {} query', function (done) {
         getEngine(function (error, engine) {
-          insertObjects(engine, [{ a: 3 }, { a: 1 }, { a: 2 }, { a: 2 }], function () {
+          insertObjects(engine, [ { a: 3 }, { a: 1 }, { a: 2 }, { a: 2 } ], function () {
             engine.count({}, function (error, count) {
               count.should.equal(4)
               done()
