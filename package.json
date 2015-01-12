@@ -24,16 +24,15 @@
     "posttest": "./node_modules/.bin/istanbul check-coverage && rm -rf coverage",
     "prepublish": "npm test && npm prune"
   },
-  "engine": ">=0.8",
+  "engine": ">=0.10",
   "dependencies": {
-    "async": "*",
-    "lodash": "*"
+    "async": "^0.9.0",
+    "lodash": "^2.4.1"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "*",
-    "lodash": "*",
-    "istanbul": "~0.1.45",
-    "jshint": "~2.3.0"
+    "istanbul": "^0.3.5",
+    "jshint": "^2.5.11",
+    "mocha": "^2.1.0",
+    "should": "^4.5.1"
   }
 }
