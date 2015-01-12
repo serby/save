@@ -56,7 +56,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
 
       it('should correctly insert an entity with a nested object', function (done) {
 
-        var testObject = { a: 1, b: { a: 2, b: 2 }}
+        var testObject = { a: 1, b: { a: 2, b: 2 } }
 
         getEngine(function (error, engine) {
           engine.create(testObject, function (error, entity) {
@@ -570,14 +570,6 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
           })
         })
 
-      })
-
-      it('should throw error is callback is missing', function () {
-        getEngine(function (error, engine) {
-          (function () {
-            engine.find({ a: 1 })
-          }).should.throwError('callback must be a function')
-        })
       })
 
       it('should emit a \'find\' event', function (done) {
