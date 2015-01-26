@@ -53,7 +53,7 @@ module.exports = function(idProperty, getEngine) {
     it('should use options to shape results', function (done) {
       getEngine(function (error, engine) {
         async.map([ { a: 3 }, { a: 1 }, { a: 2 } ], engine.create, function () {
-          engine.findOne({}, { sort: [ [ 'a', 'asc' ] ] }, function (error, object) {
+          engine.findOne({}, { sort: { a: 1 } }, function (error, object) {
             object.a.should.equal(1)
             done()
           })

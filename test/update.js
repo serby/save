@@ -11,7 +11,9 @@ module.exports = function(idProperty, getEngine) {
       getEngine(function (error, engine) {
         engine.create({ a: 1 }, function (error, insertedObject) {
           should.not.exist(error)
+
           engine.update(insertedObject, function (error, savedObject) {
+
             should.not.exist(error)
             savedObject.should.eql(insertedObject)
             done()
