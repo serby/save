@@ -1,6 +1,6 @@
 var assert = require('assert')
   , WriteStream = require('stream').WriteStream
-  , ReadStream = require('stream').ReadStream
+  , Stream = require('stream').Stream
   , streamAssert = require('stream-assert')
   , map = require('async').map
 
@@ -66,7 +66,7 @@ module.exports = function(idProperty, getEngine) {
 
     it('should return ReadStream if no callback is provided', function (done) {
       getEngine(function (error, engine) {
-        assert.ok(engine.find({}) instanceof ReadStream, 'not a instance of Stream')
+        assert.ok(engine.find({}) instanceof Stream, 'not a instance of Stream')
         done()
       })
     })

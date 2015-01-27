@@ -27,6 +27,7 @@
   "engine": ">=0.10",
   "dependencies": {
     "async": "^0.9.0",
+    "event-stream": "^3.2.1",
     "lodash": "^2.4.1",
     "mingo": "^0.3.1"
   },
