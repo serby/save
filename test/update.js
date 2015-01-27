@@ -1,4 +1,4 @@
-var _ = require('lodash')
+var extend = require('lodash.assign')
   , async = require('async')
   , should = require('should')
 
@@ -86,7 +86,7 @@ module.exports = function(idProperty, getEngine) {
           var extraSet = { b: 2 }
           extraSet[idProperty] = objects[0][idProperty]
           engine.update(extraSet, function (error, savedObject) {
-            var compositeObject = _.extend({}, objects[0], extraSet)
+            var compositeObject = extend({}, objects[0], extraSet)
             savedObject.should.eql(compositeObject)
             done()
           })

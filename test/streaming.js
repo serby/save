@@ -1,5 +1,4 @@
 var assert = require('assert')
-  , WriteStream = require('stream').WriteStream
   , Stream = require('stream').Stream
   , streamAssert = require('stream-assert')
   , map = require('async').map
@@ -11,7 +10,7 @@ module.exports = function(idProperty, getEngine) {
     it('should be a write stream', function (done) {
 
       getEngine(function (error, engine) {
-        assert.ok(engine instanceof WriteStream, 'not a WriteStream')
+        assert.ok(engine instanceof Stream, 'not a Stream')
         done()
       })
     })
@@ -21,11 +20,12 @@ module.exports = function(idProperty, getEngine) {
       getEngine(function (error, engine) {
         engine
         .pipe(streamAssert.first(function(data) {
-            assert.equal(data, { a: 1 })
+            assert.deepEqual(data, { _id: 1, a: 1 })
           }))
-        .end(done)
+        .pipe(streamAssert.end(done))
 
         engine.write({ a: 1 })
+        engine.end()
       })
     })
 
@@ -37,13 +37,13 @@ module.exports = function(idProperty, getEngine) {
 
           engine
             .pipe(streamAssert.first(function(data) {
-                assert.equal(data, { _id: 1, a: 2 })
+                assert.deepEqual(data, { _id: 1, a: 2 })
               }))
-            .end(done)
-
+            .pipe(streamAssert.end(done))
         })
 
         engine.write({ _id: 1, a: 2 })
+        engine.end()
       })
     })
 
@@ -53,11 +53,12 @@ module.exports = function(idProperty, getEngine) {
 
         engine
           .pipe(streamAssert.first(function(data) {
-              assert.equal(data, { _id: 3, a: 2 })
+              assert.deepEqual(data, { _id: 3, a: 2 })
             }))
-          .end(done)
+          .pipe(streamAssert.end(done))
 
         engine.write({ _id: 3, a: 2 })
+        engine.end()
       })
     })
   })
