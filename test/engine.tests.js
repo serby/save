@@ -28,6 +28,7 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
       , './count'
       , './create-or-update'
       , './streaming'
+      , './id-type'
        ].map(function(testFile) {
         require(testFile)(idProperty, getEngine)
       })
