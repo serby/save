@@ -1,5 +1,7 @@
 # save - A simple CRUD based persistence abstraction for storing objects to any backend data store. eg. Memory, MongoDB, Redis, CouchDB, Postgres, Punch Card etc.
 
+[![Join the chat at https://gitter.im/serby/save](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/serby/save?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 **save** comes with a fully featured in memory engine which is super handy for testing your models.
 For real world use you'll need to get one of the database powered engines:
 
