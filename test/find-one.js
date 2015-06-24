@@ -39,6 +39,19 @@ module.exports = function(idProperty, getEngine) {
       })
     })
 
+    it('should return a clone of the object', function (done) {
+      var object = { a: 3 }
+      getEngine(function (error, engine) {
+        async.map([ object ], engine.create, function () {
+          engine.findOne({}, function (error, newObject) {
+            newObject.newProperty = true
+            object.should.not.have.property('newProperty')
+            done()
+          })
+        })
+      })
+    })
+
     it('should return an object for a single clause query that matches an existing object ', function (done) {
       getEngine(function (error, engine) {
         async.map([ { a: 1 } ], engine.create, function () {

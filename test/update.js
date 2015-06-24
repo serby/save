@@ -114,11 +114,40 @@ module.exports = function(idProperty, getEngine) {
           var newObject = { b: 2 }
           newObject[idProperty] = objects[0][idProperty]
           engine.update(newObject, true, function (error, savedObject) {
-            console.log(typeof savedObject[idProperty])
             savedObject[idProperty].should.be.type('string')
             done()
           })
 
+        })
+      })
+    })
+
+    it('should return a unreferenced overridden object when override is true', function (done) {
+      getEngine(function (error, engine) {
+        async.map([ { a: 1 } ], engine.create, function (error, objects) {
+          var newObject = { b: 2 }
+          newObject[idProperty] = objects[0][idProperty]
+
+          engine.update(newObject, true, function (error, savedObject) {
+            savedObject.newProperty = true
+            newObject.should.not.have.property('newProperty')
+            done()
+          })
+        })
+      })
+    })
+
+    it('should return a unreferenced object when override is false', function (done) {
+      getEngine(function (error, engine) {
+        async.map([ { a: 1 } ], engine.create, function (error, objects) {
+          var newObject = { b: 2 }
+          newObject[idProperty] = objects[0][idProperty]
+
+          engine.update(newObject, false, function (error, savedObject) {
+            savedObject.newProperty = true
+            newObject.should.not.have.property('newProperty')
+            done()
+          })
         })
       })
     })

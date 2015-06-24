@@ -4,7 +4,7 @@ module.exports = function(idProperty, getEngine) {
 
   describe('#createOrUpdate', function() {
 
-    it ('should create a new object when no id is specified', function (done) {
+    it('should create a new object when no id is specified', function (done) {
       getEngine(function (error, engine) {
         engine.createOrUpdate({ a: 1 }, function (err, object) {
           should.not.exist(err)
@@ -15,7 +15,19 @@ module.exports = function(idProperty, getEngine) {
       })
     })
 
-    it ('should emit a \'create\' event when a new object is created', function (done) {
+    it('should return a clone of the object', function (done) {
+      var object = { a: 1 }
+      getEngine(function (error, engine) {
+        engine.createOrUpdate(object, function (err, newObject) {
+          should.not.exist(err)
+          newObject.newProperty = true
+          object.should.not.have.property('newProperty')
+          done()
+        })
+      })
+    })
+
+    it('should emit a \'create\' event when a new object is created', function (done) {
       getEngine(function (error, engine) {
         engine.on('create', function (entity) {
           entity.should.eql({ a: 3 })
@@ -26,7 +38,7 @@ module.exports = function(idProperty, getEngine) {
       })
     })
 
-    it ('should update the entity when it has already been saved', function (done) {
+    it('should update the entity when it has already been saved', function (done) {
       getEngine(function (error, engine) {
         engine.createOrUpdate({ a: 5 }, function (err, object) {
           var previousId = object._id
@@ -41,7 +53,7 @@ module.exports = function(idProperty, getEngine) {
       })
     })
 
-    it ('should emit the \'update\' event when a object is updated', function (done) {
+    it('should emit the \'update\' event when a object is updated', function (done) {
       getEngine(function (error, engine) {
         engine.on('update', function (object) {
           object.a.should.eql(7)
