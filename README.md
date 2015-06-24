@@ -1,6 +1,8 @@
 # save - A simple CRUD based persistence abstraction for storing objects to any backend data store. eg. Memory, MongoDB, Redis, CouchDB, Postgres, Punch Card etc.
 
-[![Join the chat at https://gitter.im/serby/save](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/serby/save?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![NPM Details](https://nodei.co/npm/save.png?stars&downloads)](https://npmjs.org/package/save)
+
+[![build status](https://api.travis-ci.org/serby/save.png)](http://travis-ci.org/serby/save) [![Dependences](https://david-dm.org/serby/save.svg)](https://david-dm.org/serby/save/) [![Join the chat at https://gitter.im/serby/save](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/serby/save?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 **save** comes with a fully featured in memory engine which is super handy for testing your models.
 For real world use you'll need to get one of the database powered engines:
@@ -10,27 +12,33 @@ For real world use you'll need to get one of the database powered engines:
 If your data store of choice isn't listed here please create an engine and send me a pull request.
 To see an example of how to create an engine, please see [save-mongodb](https://github.com/serby/save-mongodb).
 
-[![build status](https://api.travis-ci.org/serby/save.png)](http://travis-ci.org/serby/save)
-
 ## Installation
 
     npm install save
 
 ## Example
-    var save = require('save')
-      , s = save('person')
 
-    s.on('create', function() {
-      console.log('New person created!')
-    })
+```js
 
-    s.create({ name: 'Dom' }, function(err, person) {
-      // Outputs { name: 'Dom', _id: 1 }
-      console.log(person)
-    })
+var save = require('save')
+  , s = save('person')
+
+s.on('create', function() {
+  console.log('New person created!')
+})
+
+s.create({ name: 'Dom' }, function(err, person) {
+  // Outputs { name: 'Dom', _id: 1 }
+  console.log(person)
+})
+
+```
 
 ## Usage
-    var save = require('save')
+
+```js
+var save = require('save')
+```
 
 ### var s = save(name, [options])
 Save by default returns an in memory engine which means you can unit test your models independently from your database. `name` is the name of your model.
