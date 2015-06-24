@@ -122,23 +122,31 @@ module.exports = function(idProperty, getEngine) {
       })
     })
 
-    it('should always return a new object', function (done) {
+    it('should return a unreferenced overridden object when override is true', function (done) {
       getEngine(function (error, engine) {
         async.map([ { a: 1 } ], engine.create, function (error, objects) {
           var newObject = { b: 2 }
           newObject[idProperty] = objects[0][idProperty]
-          
+
           engine.update(newObject, true, function (error, savedObject) {
             savedObject.newProperty = true
             newObject.should.not.have.property('newProperty')
             done()
           })
+        })
+      })
+    })
 
-          delete newObject.newProperty
+    it('should return a unreferenced object when override is false', function (done) {
+      getEngine(function (error, engine) {
+        async.map([ { a: 1 } ], engine.create, function (error, objects) {
+          var newObject = { b: 2 }
+          newObject[idProperty] = objects[0][idProperty]
 
           engine.update(newObject, false, function (error, savedObject) {
             savedObject.newProperty = true
             newObject.should.not.have.property('newProperty')
+            done()
           })
         })
       })
