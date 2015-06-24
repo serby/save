@@ -59,6 +59,23 @@ module.exports = function(idProperty, getEngine) {
       })
     })
 
+    it('should return a clone of the object', function (done) {
+      var original = { a: 1 }
+
+      getEngine(function (error, engine) {
+        engine.create(original, function (error, entity) {
+
+          engine.read(entity[idProperty], function (error, entity) {
+
+            entity.newProperty = true
+            original.should.not.have.property('newProperty')
+
+            done()
+          })
+        })
+      })
+    })
+
   })
 
 }
