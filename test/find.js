@@ -160,7 +160,7 @@ module.exports = function(idProperty, getEngine) {
         async.map([ { a: 1, b: 1 }, { a: 2, b: 2 }, { b: 3, c: 3 }, { b: 4, c: 4 } ], engine.create, function () {
           engine.find({}, { fields: { b: 1, c: 1 }, sort: { b: 1 } }, function (error, objects) {
             objects.map(function(object) { delete object._id; return object })
-              .should.eql([ { b: 1 }, { b: 2 }, { b: 3, c: 3 }, { b:4, c: 4 } ])
+              .should.eql([ { b: 1 }, { b: 2 }, { b: 3, c: 3 }, { b: 4, c: 4 } ])
             done()
           })
         })
