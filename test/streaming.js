@@ -20,7 +20,7 @@ module.exports = function(idProperty, getEngine) {
       getEngine(function (error, engine) {
         engine
         .pipe(streamAssert.first(function(data) {
-            assert.deepEqual(data, { _id: 1, a: 1 })
+            assert.deepEqual(data.a, 1)
           }))
         .pipe(streamAssert.end(done))
 
@@ -33,17 +33,18 @@ module.exports = function(idProperty, getEngine) {
 
       getEngine(function (error, engine) {
 
-        engine.create({ _id: 1, a: 1, }, function() {
+        engine.create({ a: 1, }, function(err, existingEntity) {
 
           engine
             .pipe(streamAssert.first(function(data) {
-                assert.deepEqual(data, { _id: 1, a: 2 })
+                assert.equal(data.a, 2)
+                assert.equal(existingEntity._id, data._id)
               }))
             .pipe(streamAssert.end(done))
-        })
 
-        engine.write({ _id: 1, a: 2 })
-        engine.end()
+            engine.write({ _id: existingEntity._id, a: 2 })
+            engine.end()
+        })
       })
     })
 
@@ -53,11 +54,11 @@ module.exports = function(idProperty, getEngine) {
 
         engine
           .pipe(streamAssert.first(function(data) {
-              assert.deepEqual(data, { _id: 3, a: 2 })
+              assert.equal(data.a, 2)
             }))
           .pipe(streamAssert.end(done))
 
-        engine.write({ _id: 3, a: 2 })
+        engine.write({ _id: 1, a: 2 })
         engine.end()
       })
     })
