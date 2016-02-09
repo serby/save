@@ -9,6 +9,7 @@
     "ORM",
     "it's not an ORM"
   ],
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git@github.com:serby/save"
