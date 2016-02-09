@@ -1,6 +1,7 @@
 var _ = require('lodash')
   , async = require('async')
   , should = require('should')
+  , assert = require('assert')
 
 module.exports = function(idProperty, getEngine) {
 
@@ -27,6 +28,23 @@ module.exports = function(idProperty, getEngine) {
         engine.find({ a: 1 }, {}, function () {
         })
 
+      })
+    })
+
+    it('should emit a \'received\' event', function (done) {
+      getEngine(function (error, engine) {
+        async.map([ { a: 1 } ], engine.create, function () {
+
+          engine.on('received', function (data) {
+            assert.equal(data.length, 1)
+            assert.equal(data[0].a, 1)
+            done()
+          })
+
+          engine.find({ a: 1 }, {}, function () {
+          })
+
+        })
       })
     })
 
