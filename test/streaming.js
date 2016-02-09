@@ -86,5 +86,28 @@ module.exports = function(idProperty, getEngine) {
       })
     })
 
+    it('should emit `received`', function (done) {
+
+      getEngine(function (error, engine) {
+        map([ { a: 1, b: 0 }, { a: 2, b: 0 } ], engine.create, function (error, documents) {
+          var receivedData = []
+          engine.on('received', function (data) {
+            receivedData.push(data)
+            if (data.length === 2) {
+              done()
+            } else if (data.length > 2) {
+               done(new Error('Too many events emitted'))
+            }
+          })
+          var stream = engine.find({ b: 0 })
+          stream
+          .pipe(streamAssert.first(function(data) { assert.deepEqual(data, documents[0]) }))
+          .pipe(streamAssert.second(function(data) { assert.deepEqual(data, documents[1]) }))
+          .pipe(streamAssert.end(done))
+
+        })
+      })
+    })
+
   })
 }

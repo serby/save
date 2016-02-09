@@ -1,4 +1,4 @@
-var should = require('should')
+var assert = require('assert')
 
 module.exports = function(idProperty, getEngine) {
 
@@ -8,9 +8,7 @@ module.exports = function(idProperty, getEngine) {
 
       getEngine(function (error, engine) {
         engine.read('999', function (error, entity) {
-
-          should.not.exist(entity)
-          should.strictEqual(undefined, entity)
+          assert.equal(undefined, entity)
           done()
         })
       })
@@ -19,7 +17,7 @@ module.exports = function(idProperty, getEngine) {
     it('should emit a \'read\' event', function (done) {
       getEngine(function (error, engine) {
         engine.on('read', function (id) {
-          id.should.eql('999')
+          assert.equal(id, '999')
           done()
         })
         engine.read('999', function () {
@@ -35,8 +33,25 @@ module.exports = function(idProperty, getEngine) {
         engine.create(original, function (error, entity) {
 
           engine.read(entity[idProperty], function (error, entity) {
-            entity.should.eql(entity)
+            assert.equal(entity, entity)
             done()
+          })
+        })
+      })
+    })
+
+    it('should emit a received event', function (done) {
+
+      var original = { a: 1 }
+
+      getEngine(function (error, engine) {
+        engine.create(original, function (error, entity) {
+          engine.on('received', function (data) {
+            assert.deepEqual(data, entity)
+            done()
+          })
+          engine.read(entity[idProperty], function (error, entity) {
+            assert.deepEqual(entity, entity)
           })
         })
       })

@@ -26,6 +26,20 @@ module.exports = function(idProperty, getEngine) {
       })
     })
 
+
+    it('should emit a \'received\' event', function (done) {
+      getEngine(function (error, engine) {
+        engine.on('received', function (data) {
+          data.should.eql(0)
+          done()
+        })
+
+        engine.count({ a: 1 }, function () {
+        })
+
+      })
+    })
+
     it('should return correct count if objects match query', function (done) {
       getEngine(function (error, engine) {
         async.map([ { a: 3 }, { a: 1 }, { a: 2 }, { a: 2 } ], engine.create, function () {
