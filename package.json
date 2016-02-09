@@ -33,11 +33,11 @@
     "mingo": "^0.6.0"
   },
   "devDependencies": {
-    "istanbul": "^0.3.16",
-    "jshint": "^2.8.0",
-    "lodash": "^3.9.3",
-    "mocha": "^2.2.5",
-    "should": "^7.0.1",
-    "stream-assert": "^2.0.2"
+    "istanbul": "^0.4.2",
+    "jshint": "^2.9.1",
+    "lodash": "^4.3.0",
+    "mocha": "^2.4.5",
+    "should": "^8.2.2",
+    "stream-assert": "^2.0.3"
   }
 }
