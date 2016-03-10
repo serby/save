@@ -185,7 +185,7 @@ module.exports = function(idProperty, getEngine) {
       })
     })
 
-    it('should support { limit: {} } property in options', function (done) {
+    it('should support { limit: n } property in options', function (done) {
       getEngine(function (error, engine) {
         async.map([ { a: 1, b: 1 }, { a: 2, b: 2 }, { b: 3, c: 3 }, { b: 4, c: 4 } ], engine.create, function () {
           engine.find({}, { fields: { b: 1, c: 1 }, limit: 1 }, function (error, objects) {
