@@ -30,7 +30,7 @@
     "async": "^2.4.1",
     "event-stream": "^3.3.4",
     "lodash.assign": "^4.2.0",
-    "mingo": "^1.1.2"
+    "mingo": "1.1.2"
   },
   "devDependencies": {
     "istanbul": "^0.4.5",
