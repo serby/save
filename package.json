@@ -19,10 +19,10 @@
   },
   "main": "lib/save",
   "scripts": {
-    "lint": "./node_modules/.bin/jshint .",
+    "lint": "jshint .",
     "pretest": "npm run-script lint",
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive -R spec -r should",
-    "posttest": "./node_modules/.bin/istanbul check-coverage && rm -rf coverage",
+    "test": "istanbul cover ./node_modules/.bin/_mocha -- --recursive -R spec -r should",
+    "posttest": "istanbul check-coverage && rm -rf coverage",
     "prepublish": "npm test && npm prune"
   },
   "engine": ">=0.10",
@@ -30,7 +30,7 @@
     "async": "^2.4.1",
     "event-stream": "^3.3.4",
     "lodash.assign": "^4.2.0",
-    "mingo": "^1.1.2"
+    "mingo": "^1.3.1"
   },
   "devDependencies": {
     "istanbul": "^0.4.5",
