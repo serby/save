@@ -34,7 +34,8 @@ module.exports = function(idProperty, getEngine) {
           done()
         })
 
-        engine.count({ a: 1 }, function () {
+        engine.count({ a: 1 }, function (error) {
+          if (error) return done(error)
         })
 
       })
@@ -42,10 +43,18 @@ module.exports = function(idProperty, getEngine) {
 
     it('should return correct count if objects match query', function (done) {
       getEngine(function (error, engine) {
-        async.map([ { a: 3 }, { a: 1 }, { a: 2 }, { a: 2 } ], engine.create, function () {
-          engine.count({ a: 2 }, function (error, count) {
-            count.should.equal(2)
-            done()
+        async.mapSeries([ { a: 3 }, { a: 1 }, { a: 2, b: 1 }, { a: 2, b: 2 }, { a: 2, b: 3 } ], engine.create, function (error) {
+          if (error) return done(error)
+          engine.find({ a: 2 }, function (error, results) {
+            if (results.length > 3) {
+              console.log('count', results)
+              return done(new Error('Wrong number'))
+            }
+            engine.count({ a: 2 }, function (error, count) {
+              if (error) return done(error)
+              count.should.equal(3)
+              done()
+            })
           })
         })
       })
@@ -53,8 +62,10 @@ module.exports = function(idProperty, getEngine) {
 
     it('should return total count with a {} query', function (done) {
       getEngine(function (error, engine) {
-        async.map([ { a: 3 }, { a: 1 }, { a: 2 }, { a: 2 } ], engine.create, function () {
+        async.mapSeries([ { a: 3 }, { a: 1 }, { a: 2, c: 1 }, { a: 2, c: 2 } ], engine.create, function (error) {
+          if (error) return done(error)
           engine.count({}, function (error, count) {
+            if (error) return done(error)
             count.should.equal(4)
             done()
           })

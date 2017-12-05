@@ -1,7 +1,7 @@
 var assert = require('assert')
   , Stream = require('stream').Stream
   , streamAssert = require('stream-assert')
-  , map = require('async').map
+  , mapSeries = require('async').mapSeries
 
 module.exports = function(idProperty, getEngine) {
 
@@ -76,7 +76,7 @@ module.exports = function(idProperty, getEngine) {
     it('should stream result data via ‘objectIdToString’ transformation', function (done) {
 
       getEngine(function (error, engine) {
-        map([ { a: 1, b: 0 }, { a: 2, b: 0 } ], engine.create, function (error, documents) {
+        mapSeries([ { a: 1, b: 0 }, { a: 2, b: 0 } ], engine.create, function (error, documents) {
           var stream = engine.find({ b: 0 })
           stream
           .pipe(streamAssert.first(function(data) { assert.deepEqual(data, documents[0]) }))
@@ -89,7 +89,7 @@ module.exports = function(idProperty, getEngine) {
     it('should emit `received`', function (done) {
 
       getEngine(function (error, engine) {
-        map([ { a: 1, b: 0 }, { a: 2, b: 0 } ], engine.create, function (error, documents) {
+        mapSeries([ { a: 1, b: 0 }, { a: 2, b: 0 } ], engine.create, function (error, documents) {
           var receivedData = []
           engine.on('received', function (data) {
             receivedData.push(data)

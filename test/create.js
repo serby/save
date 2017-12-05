@@ -180,7 +180,7 @@ module.exports = function(idProperty, getEngine) {
       })
     })
 
-    it('should return a new object', function () {
+    it('should return a new object', function (done) {
       var data = { a: 1 }
     , dataClone = _.clone(data)
     , engine = require('../lib/memory-engine')()
@@ -195,6 +195,7 @@ module.exports = function(idProperty, getEngine) {
         engine.read(object._id, function (error, item) {
           item.should.have.property('a')
           item.should.have.property('_id')
+          done()
         })
       })
     })

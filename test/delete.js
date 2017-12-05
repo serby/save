@@ -40,21 +40,5 @@ module.exports = function(idProperty, getEngine) {
         })
       })
     })
-
-    it('should allow no callback', function () {
-      getEngine(function (error, engine) {
-        (function () {
-          engine.delete(1)
-        }).should.not.throwError()
-      })
-    })
-
-    it('should throw TypeError if callback is not a function', function () {
-      getEngine(function (error, engine) {
-        (function () {
-          engine.delete(1, {})
-        }).should.throwError('callback must be a function or empty')
-      })
-    })
   })
 }

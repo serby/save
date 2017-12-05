@@ -6,8 +6,8 @@ describe('save()', function () {
     }).should.throwError('A string must be provided for \'name\'')
 
   })
-  it('should fire a find event', function () {
+  it('should fire a find event', function (done) {
     var save = require('..')('jim', { logger: { info: function () {} } })
-    save.find({}, function () {})
+    save.find({}, done)
   })
 })
