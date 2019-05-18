@@ -25,18 +25,18 @@
     "posttest": "istanbul check-coverage && rm -rf coverage",
     "prepublish": "npm test && npm prune"
   },
-  "engine": ">=0.10",
+  "engine": ">=6",
   "dependencies": {
-    "async": "^2.4.1",
+    "async": "^2.6.2",
     "event-stream": "^4.0.1",
     "lodash.assign": "^4.2.0",
     "mingo": "1"
   },
   "devDependencies": {
     "istanbul": "^0.4.5",
-    "jshint": "^2.9.4",
+    "jshint": "^2.10.2",
     "lodash": "^4.17.4",
-    "mocha": "^5.2.0",
+    "mocha": "^6.1.4",
     "should": "^13.2.3",
     "stream-assert": "^2.0.3"
   }
