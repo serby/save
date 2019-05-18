@@ -15,3 +15,5 @@ Icon?
 
 # nodejs npm modules
 /node_modules
+
+.nyc_output

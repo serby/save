@@ -21,8 +21,7 @@
   "scripts": {
     "lint": "jshint .",
     "pretest": "npm run-script lint",
-    "test": "istanbul cover ./node_modules/.bin/_mocha -- --recursive -R spec -r should",
-    "posttest": "istanbul check-coverage && rm -rf coverage",
+    "test": "nyc mocha -- --recursive -R spec -r should",
     "prepublish": "npm test && npm prune"
   },
   "engine": ">=6",
@@ -33,10 +32,10 @@
     "mingo": "1"
   },
   "devDependencies": {
-    "istanbul": "^0.4.5",
     "jshint": "^2.10.2",
     "lodash": "^4.17.4",
     "mocha": "^6.1.4",
+    "nyc": "^14.1.1",
     "should": "^13.2.3",
     "stream-assert": "^2.0.3"
   }
