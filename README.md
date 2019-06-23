@@ -2,7 +2,7 @@
 
 [![NPM Details](https://nodei.co/npm/save.png?stars&downloads)](https://npmjs.org/package/save)
 
-[![build status](https://api.travis-ci.org/serby/save.png)](http://travis-ci.org/serby/save) [![Dependences](https://david-dm.org/serby/save.svg)](https://david-dm.org/serby/save/) [![Join the chat at https://gitter.im/serby/save](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/serby/save?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![build status](https://api.travis-ci.org/serby/save.png)](http://travis-ci.org/serby/save) [![Dependences](https://david-dm.org/serby/save.svg)](https://david-dm.org/serby/save/) [![Join the chat at https://gitter.im/serby/save](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/serby/save?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Greenkeeper badge](https://badges.greenkeeper.io/serby/save.svg)](https://greenkeeper.io/)
 
 **save** comes with a fully featured in memory engine which is super handy for testing your models.
 For real world use you'll need to get one of the database powered engines:
