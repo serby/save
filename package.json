@@ -19,23 +19,33 @@
   },
   "main": "lib/save",
   "scripts": {
-    "lint": "jshint .",
-    "pretest": "npm run-script lint",
+    "lint": "eslint -f unix .",
     "test": "nyc mocha -- --recursive -R spec -r should",
-    "prepublish": "npm test && npm prune"
+    "prepublish": "npm test && npm prune",
+    "pretest": "node_version=$(node -v); if [ ${node_version:1:1} != 6 ]; then npm run-script lint; fi",
+    "prettier": "prettier --write '**/*.js'"
   },
   "engine": ">=6",
   "dependencies": {
-    "async": "^2.6.2",
+    "async": "^3.1.0",
     "event-stream": "^4.0.1",
     "lodash.assign": "^4.2.0",
     "mingo": "1"
   },
   "devDependencies": {
-    "jshint": "^2.10.2",
-    "lodash": "^4.17.4",
-    "mocha": "^6.1.4",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-prettier-standard": "^3.0.1",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "lodash": "^4.17.15",
+    "mocha": "^6.2.0",
     "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
     "should": "^13.2.3",
     "stream-assert": "^2.0.3"
   }
