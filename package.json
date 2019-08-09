@@ -22,7 +22,7 @@
     "lint": "eslint -f unix .",
     "test": "nyc mocha -- --recursive -R spec -r should",
     "prepublish": "npm test && npm prune",
-    "pretest": "node_version=$(node -v); if [ ${node_version:1:1} != 6 ]; then npm run-script lint; fi",
+    "pretest": "npm run-script lint",
     "prettier": "prettier --write '**/*.js'"
   },
   "engine": ">=6",
