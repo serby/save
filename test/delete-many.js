@@ -1,10 +1,10 @@
-var async = require('async'),
-  should = require('should')
+var async = require('async')
+var should = require('should')
 
 module.exports = function(idProperty, getEngine) {
   describe('#deleteMany()', function() {
     it('should delete the entity if the delete query matches', function(done) {
-      getEngine(function(error, engine) {
+      getEngine(function(ignoreError, engine) {
         var objectToDelete = { a: 1 }
         async.map(
           [objectToDelete, objectToDelete, { a: 2 }, { b: 1 }],
@@ -13,7 +13,7 @@ module.exports = function(idProperty, getEngine) {
             engine.deleteMany(objectToDelete, function(error) {
               should.not.exist(error)
 
-              engine.find({}, {}, function(error, objects) {
+              engine.find({}, {}, function(ignoreError, objects) {
                 // Assert items have been deleted
                 objects.length.should.equal(2)
 
@@ -30,8 +30,8 @@ module.exports = function(idProperty, getEngine) {
     })
 
     it("should emit a 'deleteMany' event", function(done) {
-      getEngine(function(error, engine) {
-        engine.create({ a: 1 }, function(error, insertedObject) {
+      getEngine(function(ignoreError, engine) {
+        engine.create({ a: 1 }, function(ignoreError, insertedObject) {
           engine.on('deleteMany', function(entity) {
             entity.should.eql(insertedObject)
             done()
@@ -42,8 +42,8 @@ module.exports = function(idProperty, getEngine) {
     })
 
     it("should emit a 'afterDeleteMany' event", function(done) {
-      getEngine(function(error, engine) {
-        engine.create({ a: 1 }, function(error, insertedObject) {
+      getEngine(function(ignoreError, engine) {
+        engine.create({ a: 1 }, function(ignoreError, insertedObject) {
           engine.on('afterDeleteMany', function(entity) {
             entity.should.eql(insertedObject)
             done()
@@ -54,7 +54,7 @@ module.exports = function(idProperty, getEngine) {
     })
 
     it('should not error if there are no objects to delete', function(done) {
-      getEngine(function(error, engine) {
+      getEngine(function(ignoreError, engine) {
         async.map(
           [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }],
           engine.create,
