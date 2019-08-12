@@ -1,8 +1,5 @@
 language: node_js
 node_js:
-  - 6
   - 8
   - 10
-script:
-  - 'if [ "${TRAVIS_NODE_VERSION}" != "6" ]; then npm run lint ; fi'
-  - 'npm run test'
+  - 'lts/*'
