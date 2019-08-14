@@ -1,5 +1,4 @@
 function getEngine(options, callback) {
-
   if (callback === undefined) {
     callback = options
     options = {}

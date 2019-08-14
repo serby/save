@@ -1,8 +1,11 @@
-module.exports = function (idProperty, getEngine, beforeCallback, afterCallback) {
-
-  describe('engine', function () {
-
-    before(function (done) {
+module.exports = function(
+  idProperty,
+  getEngine,
+  beforeCallback,
+  afterCallback
+) {
+  describe('engine', function() {
+    before(function(done) {
       if (typeof beforeCallback === 'function') {
         beforeCallback(done)
       } else {
@@ -10,28 +13,26 @@ module.exports = function (idProperty, getEngine, beforeCallback, afterCallback)
       }
     })
 
-    after(function () {
+    after(function() {
       if (typeof afterCallback === 'function') {
         afterCallback()
       }
     })
-
-    ; [ './id-property'
-      , './create'
-      , './read'
-      , './update'
-      , './update-many'
-      , './delete'
-      , './delete-many'
-      , './find'
-      , './find-one'
-      , './count'
-      , './create-or-update'
-      , './streaming'
-       ].map(function(testFile) {
-        require(testFile)(idProperty, getEngine)
-      })
-
+    ;[
+      './id-property',
+      './create',
+      './read',
+      './update',
+      './update-many',
+      './delete',
+      './delete-many',
+      './find',
+      './find-one',
+      './count',
+      './create-or-update',
+      './streaming'
+    ].map(function(testFile) {
+      require(testFile)(idProperty, getEngine)
+    })
   })
-
 }
