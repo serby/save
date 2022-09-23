@@ -71,56 +71,64 @@ module.exports = function(idProperty, getEngine) {
 
     it('should stream result data via ‘objectIdToString’ transformation', function(done) {
       getEngine(function(ignoreError, engine) {
-        mapSeries([{ a: 1, b: 0 }, { a: 2, b: 0 }], engine.create, function(
-          ignoreError,
-          documents
-        ) {
-          var stream = engine.find({ b: 0 })
-          stream
-            .pipe(
-              streamAssert.first(function(data) {
-                assert.deepStrictEqual(data, documents[0])
-              })
-            )
-            .pipe(
-              streamAssert.second(function(data) {
-                assert.deepStrictEqual(data, documents[1])
-              })
-            )
-            .pipe(streamAssert.end(done))
-        })
+        mapSeries(
+          [
+            { a: 1, b: 0 },
+            { a: 2, b: 0 }
+          ],
+          engine.create,
+          function(ignoreError, documents) {
+            var stream = engine.find({ b: 0 })
+            stream
+              .pipe(
+                streamAssert.first(function(data) {
+                  assert.deepStrictEqual(data, documents[0])
+                })
+              )
+              .pipe(
+                streamAssert.second(function(data) {
+                  assert.deepStrictEqual(data, documents[1])
+                })
+              )
+              .pipe(streamAssert.end(done))
+          }
+        )
       })
     })
 
     it('should emit `received`', function(done) {
       getEngine(function(ignoreError, engine) {
-        mapSeries([{ a: 1, b: 0 }, { a: 2, b: 0 }], engine.create, function(
-          ignoreError,
-          documents
-        ) {
-          var receivedData = []
-          engine.on('received', function(data) {
-            receivedData.push(data)
-            if (data.length === 2) {
-              done()
-            } else if (data.length > 2) {
-              done(new Error('Too many events emitted'))
-            }
-          })
-          var stream = engine.find({ b: 0 })
-          stream
-            .pipe(
-              streamAssert.first(function(data) {
-                assert.deepStrictEqual(data, documents[0])
-              })
-            )
-            .pipe(
-              streamAssert.second(function(data) {
-                assert.deepStrictEqual(data, documents[1])
-              })
-            )
-            .pipe(streamAssert.end(done))
-        })
+        mapSeries(
+          [
+            { a: 1, b: 0 },
+            { a: 2, b: 0 }
+          ],
+          engine.create,
+          function(ignoreError, documents) {
+            var receivedData = []
+            engine.on('received', function(data) {
+              receivedData.push(data)
+              if (data.length === 2) {
+                done()
+              } else if (data.length > 2) {
+                done(new Error('Too many events emitted'))
+              }
+            })
+            var stream = engine.find({ b: 0 })
+            stream
+              .pipe(
+                streamAssert.first(function(data) {
+                  assert.deepStrictEqual(data, documents[0])
+                })
+              )
+              .pipe(
+                streamAssert.second(function(data) {
+                  assert.deepStrictEqual(data, documents[1])
+                })
+              )
+              .pipe(streamAssert.end(done))
+          }
+        )
       })
     })
   })

@@ -30,7 +30,7 @@
     "async": "^3.2.2",
     "event-stream": "^4.0.1",
     "lodash.assign": "^4.2.0",
-    "mingo": "1"
+    "mingo": "^6.1.0"
   },
   "devDependencies": {
     "eslint": "^6.1.0",
