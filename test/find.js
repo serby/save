@@ -214,7 +214,12 @@ module.exports = function(idProperty, getEngine) {
     it('should support { fields: {} } projection in options', function(done) {
       getEngine(function(ignoreError, engine) {
         async.mapSeries(
-          [{ a: 1, b: 1 }, { a: 2, b: 2 }, { b: 3, c: 3 }, { b: 4, c: 4 }],
+          [
+            { a: 1, b: 1 },
+            { a: 2, b: 2 },
+            { b: 3, c: 3 },
+            { b: 4, c: 4 }
+          ],
           engine.create,
           function() {
             engine.find(
@@ -243,7 +248,12 @@ module.exports = function(idProperty, getEngine) {
     it('should support { limit: n } property in options', function(done) {
       getEngine(function(ignoreError, engine) {
         async.mapSeries(
-          [{ a: 1, b: 1 }, { a: 2, b: 2 }, { b: 3, c: 3 }, { b: 4, c: 4 }],
+          [
+            { a: 1, b: 1 },
+            { a: 2, b: 2 },
+            { b: 3, c: 3 },
+            { b: 4, c: 4 }
+          ],
           engine.create,
           function(error) {
             if (error) return done(error)
